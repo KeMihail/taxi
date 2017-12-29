@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import by.itacademy.keikom.taxi.dao.IUserDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
+import by.itacademy.keikom.taxi.dao.enums.UserRole;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
@@ -73,17 +74,15 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 		}
 	}
 
-	// .....
-
 	@Override
 	public void update(User user) {
-		// update users set name = ?, last_name = ?, birthday = ?, address = ?,
-		// phone_number = ?, email = ?, modified = ? where id = ?(1);
+		// update "user" set name = ?, last_name = ?, birthday = ?, address = ?,
+		// phone_number = ?, email = ?, modified = ?, role = ? where id = ?(1);
 
-		LOGGER.debug("Update user");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select user_update(?,?,?,?,?,?,?,?);")) {
+				PreparedStatement pst = connect.prepareStatement("select user_update(?,?,?,?,?,?,?,?,?)")) {
 
+			LOGGER.info("execute SQL: update user");
 			pst.setInt(1, user.getId());
 			pst.setString(2, user.getName());
 			pst.setString(3, user.getLastName());
@@ -92,6 +91,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 			pst.setString(6, user.getPhoneNumber());
 			pst.setString(7, user.getEmail());
 			pst.setTimestamp(8, user.getModified());
+			pst.setString(9, user.getRole().toString());
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -103,16 +103,18 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 	public User getById(Integer id) {
 		// select * from user where id = ?;
 
-		LOGGER.debug("show one user");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from users_getById(?)")) {
+				PreparedStatement pst = connect.prepareStatement("select * from user_getById(?)")) {
+			LOGGER.info("execute SQL: show one user");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
-			/*
-			 * if (rs.next()) { return new User(rs.getInt(10), rs.getString(1),
-			 * rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5),
-			 * rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9)); }
-			 */
+
+			if (rs.next()) {
+				return new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9),
+						UserRole.valueOf(rs.getString(11)));
+			}
+
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getById {}", e.getMessage());
 		}
@@ -123,16 +125,17 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 	public List<User> getAll() {
 		// select * from users;
 
-		LOGGER.debug("show all Users");
 		List<User> list = new ArrayList<User>();
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
+			LOGGER.info("execute SQL: show all user");
 			ResultSet rs = st.executeQuery("select * from users_getAll();");
-			/*
-			 * while (rs.next()) { list.add(new User(rs.getInt(10), rs.getString(1),
-			 * rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5),
-			 * rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9)));
-			 * }
-			 */
+
+			while (rs.next()) {
+				list.add(new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9),
+						UserRole.valueOf(rs.getString(11))));
+			}
+
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getAll {}", e.getMessage());
 		}
