@@ -1,0 +1,10 @@
+.metadata/
+parent-project-keiko/dao-keiko/target/
+parent-project-keiko/services-keiko/.settings/
+parent-project-keiko/services-keiko/target/
+parent-project-keiko/.settings/
+RemoteSystemsTempFiles/
+.recommenders/
+parent-project-keiko/dao-keiko/.settings/
+parent-project-keiko/src/main/java/by/itacademy/keikom/taxi/parent_project_keiko/App.java
+parent-project-keiko/target/classes/by/itacademy/keikom/taxi/parent_project_keiko/App.class
