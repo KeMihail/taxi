@@ -5,6 +5,12 @@ public class Car2CarOption {
 	private Integer carId;
 	private Integer carOptionId;
 
+	public Car2CarOption(Integer carId, Integer carOptionId) {
+		super();
+		this.carId = carId;
+		this.carOptionId = carOptionId;
+	}
+
 	public Car2CarOption() {
 	}
 

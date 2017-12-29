@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -51,26 +52,71 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 	}
 
 	@Override
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+	public void delete(Car2CarOption obj) {
+		// delete from car_2_car_option where car_id = ? and car_option_id = ?;
 
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect.prepareStatement("select car2CarOption_delete(?,?)")) {
+			LOGGER.info("execute SQL: delete the table entity Car2CarOption");
+			pst.setInt(1, obj.getCarId());
+			pst.setInt(2, obj.getCarOptionId());
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.error("Error from method delete {}", e.getMessage());
+		}
 	}
 
 	@Override
-	public void update(Car2CarOption obj) {
-		// TODO Auto-generated method stub
+	public void update(Car2CarOption obj, Car2CarOption newObj) {
+		// update car_2_car_option set car_id = ?(3), car_option_id = ?(4)
+		// where car_id = ?(1) and car_option_id = ?(2);
 
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect.prepareStatement("select car2CarOption_update(?,?,?,?);")) {
+			LOGGER.info("execute SQL: update the table entity Car2CarOption");
+			pst.setInt(1, obj.getCarId());
+			pst.setInt(2, obj.getCarOptionId());
+			pst.setInt(3, newObj.getCarId());
+			pst.setInt(4, newObj.getCarOptionId());
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.error("Error from method update {}", e.getMessage());
+		}
 	}
 
 	@Override
-	public Car2CarOption getById(Integer id) {
-		// TODO Auto-generated method stub
+	public Car2CarOption getById(Car2CarOption obj) {
+		// select * from car_2_car_option where car_id = ? and _car_option_id = ?
+
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect.prepareStatement("select * from car2CarOption_getById(?,?);")) {
+			LOGGER.info("execute SQL: show one entity from the table Car2CarOption");
+			pst.setInt(1, obj.getCarId());
+			pst.setInt(2, obj.getCarOptionId());
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				return new Car2CarOption(rs.getInt(1), rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Error from method getById {}", e.getMessage());
+		}
 		return null;
 	}
 
 	@Override
 	public List<Car2CarOption> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Car2CarOption> list = new ArrayList<Car2CarOption>();
+
+		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
+			LOGGER.info("execute SQL: show all entities from the table Car2CarOption");
+			ResultSet rs = st.executeQuery("select * from car2CarOption_getAll();");
+			while (rs.next()) {
+				list.add(new Car2CarOption(rs.getInt(1), rs.getInt(2)));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Error from method hetAll {}", e.getMessage());
+		}
+		return list;
 	}
 }
