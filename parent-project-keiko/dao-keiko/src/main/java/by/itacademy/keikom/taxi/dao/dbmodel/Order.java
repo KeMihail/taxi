@@ -7,6 +7,7 @@ public class Order {
 
 	private Integer id;
 	private Integer carId;
+	private Integer userId;
 	private Timestamp orderTime;
 	private Timestamp orderBegin;
 	private Timestamp orderEnd;
@@ -23,6 +24,26 @@ public class Order {
 	public Order() {
 	}
 
+	public Order(Integer id, Integer carId, Integer userId, Timestamp orderTime, Timestamp orderBegin,
+			Timestamp orderEnd, Integer distance, BigDecimal summ, Integer rateId, String departureAddress,
+			String arrivalAddress, Integer inactivityMinutes, Boolean deleted, Timestamp created, Timestamp modified) {
+		this.id = id;
+		this.carId = carId;
+		this.userId = userId;
+		this.orderTime = orderTime;
+		this.orderBegin = orderBegin;
+		this.orderEnd = orderEnd;
+		this.distance = distance;
+		this.summ = summ;
+		this.rateId = rateId;
+		this.departureAddress = departureAddress;
+		this.arrivalAddress = arrivalAddress;
+		this.inactivityMinutes = inactivityMinutes;
+		this.deleted = deleted;
+		this.created = created;
+		this.modified = modified;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -37,6 +58,14 @@ public class Order {
 
 	public void setCarId(Integer carId) {
 		this.carId = carId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Timestamp getOrderTime() {
@@ -153,6 +182,7 @@ public class Order {
 		result = prime * result + ((orderTime == null) ? 0 : orderTime.hashCode());
 		result = prime * result + ((rateId == null) ? 0 : rateId.hashCode());
 		result = prime * result + ((summ == null) ? 0 : summ.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -235,14 +265,19 @@ public class Order {
 				return false;
 		} else if (!summ.equals(other.summ))
 			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", carId=" + carId + ", orderTime=" + orderTime + ", orderBegin=" + orderBegin
-				+ ", orderEnd=" + orderEnd + ", distance=" + distance + ", summ=" + summ + ", rateId=" + rateId
-				+ ", departureAddress=" + departureAddress + ", arrivalAddress=" + arrivalAddress
+		return "Order [id=" + id + ", carId=" + carId + ", userId=" + userId + ", orderTime=" + orderTime
+				+ ", orderBegin=" + orderBegin + ", orderEnd=" + orderEnd + ", distance=" + distance + ", summ=" + summ
+				+ ", rateId=" + rateId + ", departureAddress=" + departureAddress + ", arrivalAddress=" + arrivalAddress
 				+ ", inactivityMinutes=" + inactivityMinutes + ", deleted=" + deleted + ", created=" + created
 				+ ", modified=" + modified + "]";
 	}

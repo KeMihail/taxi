@@ -2,6 +2,7 @@ package by.itacademy.keikom.taxi.dao.dbmodel;
 
 import java.sql.Timestamp;
 
+import by.itacademy.keikom.taxi.dao.enums.UserRole;
 import by.itacademy.keikom.taxi.dao.exeption.NotValidBirthdayException;
 import by.itacademy.keikom.taxi.dao.exeption.NotValidPhoneNumberException;
 
@@ -17,9 +18,10 @@ public class User extends AbstractDBModel {
 	private Boolean deleted;
 	private Timestamp created;
 	private Timestamp modified;
+	private UserRole role;
 
 	public User(Integer id, String name, String lastName, Timestamp birthday, String address, String phoneNumber,
-			String email, Boolean deleted, Timestamp created, Timestamp modified) {
+			String email, Boolean deleted, Timestamp created, Timestamp modified, UserRole role) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
@@ -30,6 +32,7 @@ public class User extends AbstractDBModel {
 		this.deleted = deleted;
 		this.created = created;
 		this.modified = modified;
+		this.role = role;
 	}
 
 	public User() {
@@ -68,7 +71,6 @@ public class User extends AbstractDBModel {
 			this.birthday = birthday;
 		} else
 			throw new NotValidBirthdayException();
-
 	}
 
 	public String getAddress() {
@@ -124,11 +126,19 @@ public class User extends AbstractDBModel {
 		this.modified = modified;
 	}
 
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", lastName=" + lastName + ", birthday=" + birthday + ", address="
 				+ address + ", phoneNumber=" + phoneNumber + ", email=" + email + ", deleted=" + deleted + ", created="
-				+ created + ", modified=" + modified + "]";
+				+ created + ", modified=" + modified + ", role=" + role + "]";
 	}
 
 	@Override
@@ -145,6 +155,7 @@ public class User extends AbstractDBModel {
 		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		return result;
 	}
 
@@ -206,6 +217,8 @@ public class User extends AbstractDBModel {
 			if (other.phoneNumber != null)
 				return false;
 		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		if (role != other.role)
 			return false;
 		return true;
 	}

@@ -20,7 +20,7 @@ public abstract class AbstractDaoImpl {
 			Class.forName("org.postgresql.Driver");
 
 			dbProperties.load(new FileInputStream(
-					"D:\\Interprise\\TaxiKeiko\\parent-project-keiko\\dao-keiko\\src\\main\\resources\\db.properties"));
+					"D:\\Interprise\\taxi\\parent-project-keiko\\dao-keiko\\src\\main\\resources\\db.properties"));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 

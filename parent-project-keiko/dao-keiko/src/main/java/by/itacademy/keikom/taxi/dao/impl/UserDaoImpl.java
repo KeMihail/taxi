@@ -32,13 +32,13 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 
 	@Override
 	public Integer create(User user) {
-		LOGGER.debug("Create new User");
+
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
-						"insert into users(name,last_name,birthday,address,phone_number,email,created)\r\n"
-								+ "values (?,?,?,?,?,?,?);",
+						"insert into \"user\"(name,last_name,birthday,address,phone_number,email,created,role)\r\n"
+								+ "values (?,?,?,?,?,?,?,?);",
 						Statement.RETURN_GENERATED_KEYS)) {
-
+			LOGGER.info("execute SQL: create new user");
 			pst.setString(1, user.getName());
 			pst.setString(2, user.getLastName());
 			pst.setTimestamp(3, user.getBirthday());
@@ -46,6 +46,7 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 			pst.setString(5, user.getPhoneNumber());
 			pst.setString(6, user.getEmail());
 			pst.setTimestamp(7, user.getCreated());
+			pst.setString(8, user.getRole().toString());
 			pst.executeUpdate();
 
 			ResultSet rs = pst.getGeneratedKeys();
@@ -60,17 +61,19 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 
 	@Override
 	public void delete(Integer id) {
-		// delete from users where id = _id;
+		// delete from "user" where id = ?;
 
-		LOGGER.debug("Delete User");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select users_delete(?);")) {
+				PreparedStatement pst = connect.prepareStatement("select user_delete(?);")) {
+			LOGGER.info("execute SQL: delete user");
 			pst.setInt(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			LOGGER.error("Error from method delete {}", e.getMessage());
 		}
 	}
+
+	// .....
 
 	@Override
 	public void update(User user) {
@@ -105,10 +108,11 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 				PreparedStatement pst = connect.prepareStatement("select * from users_getById(?)")) {
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				return new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9));
-			}
+			/*
+			 * if (rs.next()) { return new User(rs.getInt(10), rs.getString(1),
+			 * rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5),
+			 * rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9)); }
+			 */
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getById {}", e.getMessage());
 		}
@@ -123,10 +127,12 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 		List<User> list = new ArrayList<User>();
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
 			ResultSet rs = st.executeQuery("select * from users_getAll();");
-			while (rs.next()) {
-				list.add(new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9)));
-			}
+			/*
+			 * while (rs.next()) { list.add(new User(rs.getInt(10), rs.getString(1),
+			 * rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5),
+			 * rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9)));
+			 * }
+			 */
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getAll {}", e.getMessage());
 		}
