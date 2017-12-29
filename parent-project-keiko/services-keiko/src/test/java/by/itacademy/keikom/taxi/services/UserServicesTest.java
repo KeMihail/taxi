@@ -43,12 +43,18 @@ public class UserServicesTest extends AbstractServicesTest {
 		Assert.assertNotNull(list);
 
 		services.delete(user.getId());
-		Assert.assertNull(services.getById(user.getId()).getAddress());
-		Assert.assertNull(services.getById(user.getId()).getEmail());
-		Assert.assertNull(services.getById(user.getId()).getLastName());
-		Assert.assertNull(services.getById(user.getId()).getName());
-		Assert.assertNull(services.getById(user.getId()).getPhoneNumber());
-		Assert.assertNull(services.getById(user.getId()).getBirthday());
-		Assert.assertNull(services.getById(user.getId()).getCreated());
+		Assert.assertNull(services.getById(user.getId()));
+
+		// ?????:
+
+		/*
+		 * Assert.assertNull(services.getById(user.getId()).getEmail());
+		 * Assert.assertNull(services.getById(user.getId()).getLastName());
+		 * Assert.assertNull(services.getById(user.getId()).getName());
+		 * Assert.assertNull(services.getById(user.getId()).getPhoneNumber());
+		 * Assert.assertNull(services.getById(user.getId()).getBirthday());
+		 * Assert.assertNull(services.getById(user.getId()).getCreated());
+		 */
+
 	}
 }

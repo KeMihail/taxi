@@ -101,20 +101,19 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 
 	@Override
 	public User getById(Integer id) {
-		// select * from user where id = ?;
+		// select * from user_getById(?);
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from user_getById(?)")) {
+				PreparedStatement pst = connect.prepareStatement("select * from \"user\" where id = ?;")) {
 			LOGGER.info("execute SQL: show one user");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				return new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9),
+				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getString(5),
+						rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getTimestamp(9), rs.getTimestamp(10),
 						UserRole.valueOf(rs.getString(11)));
 			}
-
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getById {}", e.getMessage());
 		}
@@ -131,9 +130,10 @@ public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 			ResultSet rs = st.executeQuery("select * from users_getAll();");
 
 			while (rs.next()) {
-				list.add(new User(rs.getInt(10), rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getBoolean(7), rs.getTimestamp(8), rs.getTimestamp(9),
+				list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getString(5),
+						rs.getString(6), rs.getString(7), rs.getBoolean(8), rs.getTimestamp(9), rs.getTimestamp(10),
 						UserRole.valueOf(rs.getString(11))));
+				;
 			}
 
 		} catch (SQLException e) {

@@ -13,6 +13,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.enums.EBodyType;
 import by.itacademy.keikom.taxi.dao.enums.ECarKit;
 import by.itacademy.keikom.taxi.dao.enums.EEngineType;
+import by.itacademy.keikom.taxi.dao.enums.UserRole;
 
 public abstract class AbstractServicesTest {
 
@@ -53,6 +54,7 @@ public abstract class AbstractServicesTest {
 		user.setLastName("Кейко");
 		user.setPhoneNumber("80297875512");
 		user.setDeleted(false);
+		user.setRole(UserRole.director);
 		return user;
 	}
 
