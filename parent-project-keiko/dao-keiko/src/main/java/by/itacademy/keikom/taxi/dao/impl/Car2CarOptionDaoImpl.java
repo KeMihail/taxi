@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import by.itacademy.keikom.taxi.dao.ICar2CarOptionDao;
+import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car2CarOption;
+import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOptionDao {
@@ -31,7 +33,7 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 	}
 
 	@Override
-	public Integer create(Car2CarOption obj) {
+	public Car2CarOption create(Car2CarOption obj) {
 
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
@@ -42,10 +44,14 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 			pst.setInt(2, obj.getCarOptionId());
 			pst.executeUpdate();
 
+			Car2CarOption result = new Car2CarOption();
 			ResultSet rs = pst.getGeneratedKeys();
 			rs.next();
-			Integer id = rs.getInt("id");
-			return id;
+			Integer carId = rs.getInt("car_id");
+			Integer carOptionId = rs.getInt("car_option_id");
+			result.setCarId(carId);
+			result.setCarOptionId(carOptionId);
+			return result;
 		} catch (SQLException e) {
 			throw new SQLExecutionException(e);
 		}
@@ -85,25 +91,6 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 	}
 
 	@Override
-	public Car2CarOption getById(Car2CarOption obj) {
-		// select * from car_2_car_option where car_id = ? and _car_option_id = ?
-
-		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from car2CarOption_getById(?,?);")) {
-			LOGGER.info("execute SQL: show one entity from the table Car2CarOption");
-			pst.setInt(1, obj.getCarId());
-			pst.setInt(2, obj.getCarOptionId());
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				return new Car2CarOption(rs.getInt(1), rs.getInt(2));
-			}
-		} catch (SQLException e) {
-			LOGGER.error("Error from method getById {}", e.getMessage());
-		}
-		return null;
-	}
-
-	@Override
 	public List<Car2CarOption> getAll() {
 
 		List<Car2CarOption> list = new ArrayList<Car2CarOption>();
@@ -115,8 +102,62 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 				list.add(new Car2CarOption(rs.getInt(1), rs.getInt(2)));
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Error from method hetAll {}", e.getMessage());
+			LOGGER.error("Error from method getAll {}", e.getMessage());
 		}
 		return list;
+	}
+
+	@Override
+	public List<Integer> getByIdOption(Integer carId) {
+
+		List<Integer> list = new ArrayList<Integer>();
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect.prepareStatement(
+						"select car_2_car_option.car_option_id from car_2_car_option where car_id = ?;")) {
+			pst.setInt(1, carId);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getInt("carOptionId"));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Error from method getAll car {}", e.getMessage());
+		}
+		return list;
+	}
+
+	@Override
+	public List<Integer> getByIdCar(Integer carOptionId) {
+
+		List<Integer> list = new ArrayList<Integer>();
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect.prepareStatement(
+						"select car_2_car_option.car_id from car_2_car_option where car_option_id = ?;")) {
+			pst.setInt(1, carOptionId);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getInt("carId"));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Error from method getAll car {}", e.getMessage());
+		}
+		return list;
+	}
+
+	@Override
+	public Car2CarOption getById(Car2CarOption obj) {
+
+		try (Connection connect = getConnection();
+				PreparedStatement pst = connect
+						.prepareStatement("select * from car_2_car_option where car_id = ? and car_option_id = ?;")) {
+			pst.setInt(1, obj.getCarId());
+			pst.setInt(2, obj.getCarOptionId());
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				return new Car2CarOption(rs.getInt(1), rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Error from method getById car {}", e.getMessage());
+		}
+		return null;
 	}
 }
