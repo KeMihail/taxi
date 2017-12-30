@@ -45,7 +45,7 @@ public class AuthenticationDaoImpl extends AbstractDaoImpl implements IAuthentic
 
 			ResultSet rs = pst.getGeneratedKeys();
 			rs.next();
-			Integer id = rs.getInt("id");
+			Integer id = rs.getInt("user_id");
 			return id;
 		} catch (SQLException e) {
 			throw new SQLExecutionException(e);

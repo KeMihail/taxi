@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
@@ -24,6 +25,7 @@ public abstract class AbstractServicesTest {
 	private static User user = new User();
 	private static Car car = new Car();
 	private static Rate rate = new Rate();
+	private static Authentication authentication = new Authentication();
 
 	public static Brand createBrand() {
 		brand.setName("Рено");
@@ -76,5 +78,12 @@ public abstract class AbstractServicesTest {
 		rate.setPriceLanding(2.0);
 		rate.setPriceMinuteWait(0.3);
 		return rate;
+	}
+
+	public static Authentication createAuthentication(User user) {
+		authentication.setUserId(user.getId());
+		authentication.setLogin("login");
+		authentication.setPassword("password");
+		return authentication;
 	}
 }
