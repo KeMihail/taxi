@@ -8,6 +8,7 @@ import java.util.Date;
 import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
+import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
@@ -26,6 +27,7 @@ public abstract class AbstractServicesTest {
 	private static Car car = new Car();
 	private static Rate rate = new Rate();
 	private static Authentication authentication = new Authentication();
+	private static CarOption carOption = new CarOption();
 
 	public static Brand createBrand() {
 		brand.setName("Рено");
@@ -85,5 +87,10 @@ public abstract class AbstractServicesTest {
 		authentication.setLogin("login");
 		authentication.setPassword("password");
 		return authentication;
+	}
+
+	public static CarOption createCarOption() {
+		carOption.setName("Кондиционер");
+		return carOption;
 	}
 }
