@@ -23,7 +23,7 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 	private RateDaoImpl() {
 	}
 
-	public RateDaoImpl getInstance() {
+	public static RateDaoImpl getInstance() {
 		if (instance == null) {
 			instance = new RateDaoImpl();
 		}
@@ -75,7 +75,7 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 		// price_minute_wait = ?, modified = ? where id = ?
 		;
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select rate_update(?,'Ночной',2.3,1.2,0.1,now());")) {
+				PreparedStatement pst = connect.prepareStatement("select rate_update(?,?,?,?,?,?);")) {
 			LOGGER.info("execute SQL: update one rate");
 			pst.setInt(1, rate.getId());
 			pst.setString(2, rate.getName());
@@ -85,7 +85,7 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 			pst.setTimestamp(6, rate.getModified());
 			pst.executeUpdate();
 		} catch (Exception e) {
-
+			LOGGER.error("Error from method update {}", e.getMessage());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 						rs.getTimestamp(6), rs.getTimestamp(7));
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Error from method update {}", e.getMessage());
+			LOGGER.error("Error from method getById {}", e.getMessage());
 		}
 		return null;
 	}

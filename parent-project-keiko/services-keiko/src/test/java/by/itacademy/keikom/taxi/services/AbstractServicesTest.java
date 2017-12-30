@@ -9,6 +9,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
+import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.enums.EBodyType;
 import by.itacademy.keikom.taxi.dao.enums.ECarKit;
@@ -22,6 +23,7 @@ public abstract class AbstractServicesTest {
 	private static LegalEntity legalEntity = new LegalEntity();
 	private static User user = new User();
 	private static Car car = new Car();
+	private static Rate rate = new Rate();
 
 	public static Brand createBrand() {
 		brand.setName("Рено");
@@ -66,5 +68,13 @@ public abstract class AbstractServicesTest {
 		car.setDeleted(false);
 		car.setStatus(false);
 		return car;
+	}
+
+	public static Rate createRate() {
+		rate.setName("Дневной");
+		rate.setPriceKilometr(1.1);
+		rate.setPriceLanding(2.0);
+		rate.setPriceMinuteWait(0.3);
+		return rate;
 	}
 }
