@@ -96,6 +96,11 @@ public abstract class AbstractServicesTest {
 		return carOption;
 	}
 
+	public static CarOption createCarOptionUpdate() {
+		carOption.setName("Автомобиль Бизнес класса");
+		return carOption;
+	}
+
 	public static Car2CarOption createCar2CarOption(Car car, CarOption carOption) {
 		obj.setCarId(car.getId());
 		obj.setCarOptionId(carOption.getId());

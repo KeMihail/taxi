@@ -31,11 +31,13 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Car2CarOptionServicesTest.class);
 	private static final Car2CarOptionServicesImpl services = Car2CarOptionServicesImpl.getInstance();
 	private List<Car2CarOption> list = new ArrayList<Car2CarOption>();
-	private static CarServicesImpl carServices = CarServicesImpl.getInstance();
 
+	private static CarServicesImpl carServices = CarServicesImpl.getInstance();
 	private static Car car;
+
 	private static CarOptionServicesImpl carOptionServices = CarOptionServicesImpl.getInstance();
 	private static CarOption carOption;
+	private static CarOption carOptionUpdate;
 
 	private static Model model = new Model();
 	private static ModelServicesImpl modelServices = ModelServicesImpl.getInstance();
@@ -48,6 +50,9 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 
 	private static Brand brand;
 	private static BrandServicesImpl brandServices = BrandServicesImpl.getInstance();
+
+	private static List<Integer> getByIdOption = null;
+	private static List<Integer> getByIdCar = null;
 
 	@BeforeClass
 	public static void prepareTestData() throws ParseException {
@@ -69,6 +74,9 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 
 		carOption = createCarOption();
 		carOptionServices.save(carOption);
+
+		carOptionUpdate = createCarOptionUpdate();
+		carOptionServices.save(carOptionUpdate);
 	}
 
 	@AfterClass
@@ -80,6 +88,7 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 		userServisec.delete(user.getId());
 		carServices.delete(car.getId());
 		carOptionServices.delete(carOption.getId());
+		carOptionServices.delete(carOptionUpdate.getId());
 	}
 
 	@Test
@@ -93,7 +102,26 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 		} catch (Exception e) {
 			LOGGER.error("you cannot save the object entered all of the data");
 		}
+		obj = createCar2CarOption(car, carOption);
 		services.create(obj);
 		Assert.assertNotNull(services.getById(obj));
+
+		Car2CarOption newObj = createCar2CarOption(car, carOptionUpdate);
+		services.update(obj, newObj);
+		Assert.assertNotNull(services.getById(obj));
+
+		Assert.assertEquals(newObj, services.getById(obj));
+
+		list = services.getAll();
+		Assert.assertNotNull(list);
+
+		getByIdOption = services.getByIdOption(obj.getCarId());
+		Assert.assertNotNull(getByIdOption);
+
+		getByIdCar = services.getByIdCar(obj.getCarOptionId());
+		Assert.assertNotNull(getByIdCar);
+
+		services.delete(obj);
+		Assert.assertNull(services.getById(obj));
 	}
 }
