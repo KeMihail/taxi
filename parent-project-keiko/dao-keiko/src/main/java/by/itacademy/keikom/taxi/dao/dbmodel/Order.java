@@ -11,8 +11,8 @@ public class Order {
 	private Timestamp orderTime;
 	private Timestamp orderBegin;
 	private Timestamp orderEnd;
-	private Integer distance;
-	private BigDecimal summ;
+	private Double distance;
+	private Double summ;
 	private Integer rateId;
 	private String departureAddress;
 	private String arrivalAddress;
@@ -25,7 +25,7 @@ public class Order {
 	}
 
 	public Order(Integer id, Integer carId, Integer userId, Timestamp orderTime, Timestamp orderBegin,
-			Timestamp orderEnd, Integer distance, BigDecimal summ, Integer rateId, String departureAddress,
+			Timestamp orderEnd, Double distance, Double summ, Integer rateId, String departureAddress,
 			String arrivalAddress, Integer inactivityMinutes, Boolean deleted, Timestamp created, Timestamp modified) {
 		this.id = id;
 		this.carId = carId;
@@ -92,19 +92,19 @@ public class Order {
 		this.orderEnd = orderEnd;
 	}
 
-	public Integer getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
 
-	public void setDistance(Integer distance) {
+	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
 
-	public BigDecimal getSumm() {
+	public Double getSumm() {
 		return summ;
 	}
 
-	public void setSumm(BigDecimal summ) {
+	public void setSumm(Double summ) {
 		this.summ = summ;
 	}
 

@@ -35,13 +35,12 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 
 	@Override
 	public Integer create(Model model) {
-		LOGGER.debug("Create new model");
 
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect
 						.prepareStatement("insert into model (name,car_kit,engine_type,body_type,brand_id,created)\r\n"
 								+ "values (?,?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS)) {
-
+			LOGGER.info("execute SQL: Create new model");
 			pst.setString(1, model.getName());
 			pst.setString(2, model.getCarCit().toString());
 			pst.setString(3, model.getEngineType().toString());
@@ -65,9 +64,9 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 	public void delete(Integer id) {
 		// delete from model where id = ?;
 
-		LOGGER.debug("Delete model");
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement("select model_delete(?);")) {
+			LOGGER.info("execute SQL: Delete model");
 			pst.setInt(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -80,9 +79,9 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 		// update model set name = _?, car_kit = ?, engine_type = ?, body_type = ?,
 		// brand_id = ?, modified = ? where id = ?(1);
 
-		LOGGER.debug("Update model");
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement("select model_update (?,?,?,?,?,?,?);")) {
+			LOGGER.info("execute SQL: Update model");
 			pst.setInt(1, model.getId());
 			pst.setString(2, model.getName());
 			pst.setString(3, model.getCarCit().toString());
@@ -99,10 +98,10 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 	@Override
 	public Model getById(Integer id) {
 		// select * from model where id = ?; select * from model_getById(?)
-		LOGGER.debug("show one model");
 
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement("select * from model where id = ?")) {
+			LOGGER.info("execute SQL: show one model");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
@@ -120,10 +119,10 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 	public List<Model> getAll() {
 		// select * from model;
 
-		LOGGER.debug("show all models");
 		List<Model> list = new ArrayList<Model>();
 
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
+			LOGGER.info("execute SQL: show all models");
 			ResultSet rs = st.executeQuery("select * from model_getAll();");
 			while (rs.next()) {
 				list.add(new Model(rs.getInt(1), rs.getString(2), ECarKit.valueOf(rs.getString(3)),

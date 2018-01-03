@@ -16,7 +16,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(LegalEntityDaoImpl.class);
 	private static LegalEntityDaoImpl instance = null;
 
@@ -32,12 +32,12 @@ public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity 
 
 	@Override
 	public Integer create(LegalEntity obj) {
-		LOGGER.debug("Create new Legal entity");
 
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
 						"insert into legal_entity(name,address,phone_number,email,created) values (?,?,?,?,?);",
 						Statement.RETURN_GENERATED_KEYS)) {
+			LOGGER.info("execute SQL: create new LegalEntityr");
 			pst.setString(1, obj.getName());
 			pst.setString(2, obj.getAddress());
 			pst.setString(3, obj.getPhone_number());
@@ -59,9 +59,10 @@ public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity 
 	public void delete(Integer id) {
 		// delete from legal_entity where id = _id;
 		// select legalEntity_delete(?);
-		LOGGER.info("Delete legal entity");
+
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement("select legalEntity_delete(?);")) {
+			LOGGER.info("execute SQL: delete one LegalEntity");
 			pst.setInt(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -74,11 +75,12 @@ public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity 
 		// update legal_entity set name = ?, address = ?, phone_number = ?, email =
 		// ?,modified = ? where id = ?(1);
 		// "select legalEntity_update(?,?,?,?,?,?"
-		LOGGER.debug("Update Legal entity");
+
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
 						"update legal_entity set name = ?, address = ?, phone_number = ?, email = ?\r\n"
 								+ "	,modified = ? where id = ?;")) {
+			LOGGER.info("execute SQL: Update Legal entity");
 			pst.setInt(6, obj.getId());
 			pst.setString(1, obj.getName());
 			pst.setString(2, obj.getAddress());
@@ -93,9 +95,10 @@ public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity 
 
 	@Override
 	public LegalEntity getById(Integer id) {
-		LOGGER.debug("show one Legal entity");
+
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement("select * from legalEntity_getById(?);")) {
+			LOGGER.info("execute SQL: show one Legal entity");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
@@ -111,9 +114,10 @@ public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity 
 	@Override
 	public List<LegalEntity> getAll() {
 		// select * from legal_entity;
-		LOGGER.debug("show all Legal entity");
+
 		List<LegalEntity> list = new ArrayList<LegalEntity>();
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
+			LOGGER.info("execute SQL: show all Legal entity");
 			ResultSet rs = st.executeQuery("select * from legalEntity_getAll();");
 			while (rs.next()) {
 				list.add(new LegalEntity(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
