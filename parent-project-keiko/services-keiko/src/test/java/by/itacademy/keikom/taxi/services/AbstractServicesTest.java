@@ -23,24 +23,17 @@ import by.itacademy.keikom.taxi.dao.enums.UserRole;
 
 public abstract class AbstractServicesTest {
 
-	private static Brand brand = new Brand();
-	private static Model model = new Model();
-	private static LegalEntity legalEntity = new LegalEntity();
-	private static User user = new User();
-	private static Car car = new Car();
-	private static Rate rate = new Rate();
-	private static Authentication authentication = new Authentication();
-	private static CarOption carOption = new CarOption();
-	private static Car2CarOption obj = new Car2CarOption();
-	private static Order order = new Order();
-
 	public static Brand createBrand() {
+
+		Brand brand = new Brand();
 		brand.setName("Рено");
 		brand.setCreated(new Timestamp(new Date().getTime()));
 		return brand;
 	}
 
 	public static Model createModel(Brand brand) {
+
+		Model model = new Model();
 		model.setName("Лагуна");
 		model.setBodyType(EBodyType.МиниВен);
 		model.setBrandId(brand.getId());
@@ -50,6 +43,8 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static LegalEntity createLegalEntity() {
+
+		LegalEntity legalEntity = new LegalEntity();
 		legalEntity.setName("ООО Такси");
 		legalEntity.setAddress("г.Гродно");
 		legalEntity.setEmail("Taxi@tut.by");
@@ -58,9 +53,12 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static User createUser() throws ParseException {
+
+		User user = new User();
 		user.setName("Миша");
 		user.setAddress("г.Гродно");
-		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("1984-07-28").getTime()));
+		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd")
+				.parse("1984-07-28").getTime()));
 		user.setEmail("Mihaila4038@yandex.ru");
 		user.setLastName("Кейко");
 		user.setPhoneNumber("80297875512");
@@ -70,9 +68,12 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static User createUserClient() throws ParseException {
+
+		User user = new User();
 		user.setName("Оля");
 		user.setAddress("г.Гродно");
-		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("1984-04-22").getTime()));
+		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd")
+				.parse("1984-04-22").getTime()));
 		user.setEmail("Olga@yandex.ru");
 		user.setLastName("Кейко");
 		user.setPhoneNumber("80445006793");
@@ -82,6 +83,8 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static Car createCar(User user, Model model, LegalEntity legalEntity) {
+
+		Car car = new Car();
 		car.setReleaseYear(2001);
 		car.setUserId(user.getId());
 		car.setModelId(model.getId());
@@ -92,6 +95,8 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static Rate createRate() {
+
+		Rate rate = new Rate();
 		rate.setName("Дневной");
 		rate.setPriceKilometr(1.1);
 		rate.setPriceLanding(2.0);
@@ -100,6 +105,8 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static Authentication createAuthentication(User user) {
+
+		Authentication authentication = new Authentication();
 		authentication.setUserId(user.getId());
 		authentication.setLogin("login");
 		authentication.setPassword("password");
@@ -107,22 +114,30 @@ public abstract class AbstractServicesTest {
 	}
 
 	public static CarOption createCarOption() {
+
+		CarOption carOption = new CarOption();
 		carOption.setName("Кондиционер");
 		return carOption;
 	}
 
 	public static CarOption createCarOptionUpdate() {
+
+		CarOption carOption = new CarOption();
 		carOption.setName("Автомобиль Бизнес класса");
 		return carOption;
 	}
 
 	public static Car2CarOption createCar2CarOption(Car car, CarOption carOption) {
+
+		Car2CarOption obj = new Car2CarOption();
 		obj.setCarId(car.getId());
 		obj.setCarOptionId(carOption.getId());
 		return obj;
 	}
 
 	public static Order createOrder(Car car, Rate rate, User userClient) {
+
+		Order order = new Order();
 
 		Calendar instance = Calendar.getInstance();
 

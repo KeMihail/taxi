@@ -11,7 +11,7 @@ import by.itacademy.keikom.taxi.services.IAuthenticationServices;
 public class AuthenticationServicesImpl implements IAuthenticationServices {
 
 	private static AuthenticationDaoImpl dao = AuthenticationDaoImpl.getInstance();
-	private static AuthenticationServicesImpl instance = null;
+	private static AuthenticationServicesImpl instance;
 
 	private AuthenticationServicesImpl() {
 	}

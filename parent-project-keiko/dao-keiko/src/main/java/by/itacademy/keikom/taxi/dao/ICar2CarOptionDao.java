@@ -16,9 +16,9 @@ public interface ICar2CarOptionDao {
 
 	Car2CarOption getById(Car2CarOption obj);
 
-	List<Integer> getByIdOption(Integer carId);
+	List<Integer> getOptionsByCar(Integer carId);
 
-	List<Integer> getByIdCar(Integer carOptionId);
+	List<Integer> getCarsByOption(Integer carOptionId);
 
 	List<Car2CarOption> getAll();
 }

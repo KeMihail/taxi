@@ -108,7 +108,7 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 	}
 
 	@Override
-	public List<Integer> getByIdOption(Integer carId) {
+	public List<Integer> getOptionsByCar(Integer carId) {
 
 		List<Integer> list = new ArrayList<Integer>();
 		try (Connection connect = getConnection();
@@ -126,12 +126,12 @@ public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOpt
 	}
 
 	@Override
-	public List<Integer> getByIdCar(Integer carOptionId) {
+	public List<Integer> getCarsByOption(Integer carOptionId) {
 
 		List<Integer> list = new ArrayList<Integer>();
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
-						"select car_2_car_option.car_id from car_2_car_option where car_option_id = ?;")) {
+						"select car_id from car_2_car_option where car_option_id = ?;")) {
 			pst.setInt(1, carOptionId);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {

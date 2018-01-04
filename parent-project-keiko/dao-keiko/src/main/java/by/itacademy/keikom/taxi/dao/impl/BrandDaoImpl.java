@@ -17,7 +17,8 @@ import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BrandDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(BrandDaoImpl.class);
 	private static BrandDaoImpl instance = null;
 
 	private BrandDaoImpl() {
@@ -32,10 +33,13 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	@Override
 	public Integer create(Brand brand) {
-		LOGGER.debug("Create new Brand");
+
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("insert into brand(name,created) values (?,?)",
+				PreparedStatement pst = connect.prepareStatement(
+						"insert into brand(\"name\",created) values (?,?);",
 						Statement.RETURN_GENERATED_KEYS)) {
+
+			LOGGER.info("execute SQL: Create new Brand");
 			pst.setString(1, brand.getName());
 			pst.setTimestamp(2, brand.getCreated());
 			pst.executeUpdate();
@@ -54,11 +58,13 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	@Override
 	public void delete(Integer id) {
-		// delete from brand where id = ?;
+		// select brand_delete(?)
 
-		LOGGER.debug("Delete Brand");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select brand_delete(?)")) {
+				PreparedStatement pst = connect
+						.prepareStatement("delete from brand where id = ?")) {
+
+			LOGGER.info("execute SQL: Delete Brand");
 			pst.setInt(1, id);
 			pst.executeUpdate();
 			LOGGER.debug("execute SQL{}", "select brand_delete(?);");
@@ -69,14 +75,16 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	@Override
 	public void update(Brand brand) {
-		// update brand set name = ?,modified = ? where id = ?
+		// select brand_update(?,?,?)
 
-		LOGGER.debug("Update model");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select brand_update(?,?,?)")) {
-			pst.setInt(1, brand.getId());
-			pst.setString(2, brand.getName());
-			pst.setTimestamp(3, brand.getModified());
+				PreparedStatement pst = connect
+						.prepareStatement("update brand set \"name\" = ?, modified = ? where id = ?")) {
+
+			LOGGER.info("execute SQL: Update model");
+			pst.setString(1, brand.getName());
+			pst.setTimestamp(2, brand.getModified());
+			pst.setInt(3, brand.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			LOGGER.error("Error from method update {}", e.getMessage());
@@ -85,15 +93,18 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	@Override
 	public Brand getById(Integer id) {
-		// select * from brand_getById(?);
+		// select * from brand_getById(?)
 
-		LOGGER.debug("show one Brand");
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from brand_getById(?)")) {
+				PreparedStatement pst = connect
+						.prepareStatement("select * from brand where id = ?")) {
+
+			LOGGER.info("execute SQL: show one Brand");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				return new Brand(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getTimestamp(4));
+				return new Brand(rs.getInt(1), rs.getString(2),
+						rs.getTimestamp(3), rs.getTimestamp(4));
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getById {}", e.getMessage());
@@ -103,14 +114,17 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	@Override
 	public List<Brand> getAll() {
-		// select * from brand;
+		// select * from brand_getAll();
 
-		LOGGER.debug("show all Brands");
 		List<Brand> list = new ArrayList<Brand>();
-		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
-			ResultSet rs = st.executeQuery("select * from brand_getAll();");
+		try (Connection connect = getConnection();
+				Statement st = connect.createStatement()) {
+
+			LOGGER.info("execute SQL: show all Brands");
+			ResultSet rs = st.executeQuery("select * from brand");
 			while (rs.next()) {
-				list.add(new Brand(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getTimestamp(4)));
+				list.add(new Brand(rs.getInt(1), rs.getString(2), rs
+						.getTimestamp(3), rs.getTimestamp(4)));
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getAll {}", e.getMessage());

@@ -38,12 +38,12 @@ public class Car2CarOptionServicesImpl implements ICar2CarOptionServices {
 
 	@Override
 	public List<Integer> getByIdOption(Integer carId) {
-		return dao.getByIdOption(carId);
+		return dao.getOptionsByCar(carId);
 	}
 
 	@Override
 	public List<Integer> getByIdCar(Integer carOptionId) {
-		return dao.getByIdCar(carOptionId);
+		return dao.getCarsByOption(carOptionId);
 	}
 
 	@Override
