@@ -32,7 +32,6 @@ public class Order {
 		this.id = id;
 		this.carId = carId;
 		this.userId = userId;
-		this.orderTime = orderTime;
 		this.orderBegin = orderBegin;
 		this.orderEnd = orderEnd;
 		this.distance = distance;
