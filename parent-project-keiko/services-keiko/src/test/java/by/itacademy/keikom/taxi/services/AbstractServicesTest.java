@@ -3,6 +3,7 @@ package by.itacademy.keikom.taxi.services;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
@@ -12,6 +13,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Car2CarOption;
 import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
+import by.itacademy.keikom.taxi.dao.dbmodel.Order;
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.enums.EBodyType;
@@ -30,6 +32,7 @@ public abstract class AbstractServicesTest {
 	private static Authentication authentication = new Authentication();
 	private static CarOption carOption = new CarOption();
 	private static Car2CarOption obj = new Car2CarOption();
+	private static Order order = new Order();
 
 	public static Brand createBrand() {
 		brand.setName("Рено");
@@ -63,6 +66,18 @@ public abstract class AbstractServicesTest {
 		user.setPhoneNumber("80297875512");
 		user.setDeleted(false);
 		user.setRole(UserRole.director);
+		return user;
+	}
+
+	public static User createUserClient() throws ParseException {
+		user.setName("Оля");
+		user.setAddress("г.Гродно");
+		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("1984-04-22").getTime()));
+		user.setEmail("Olga@yandex.ru");
+		user.setLastName("Кейко");
+		user.setPhoneNumber("80445006793");
+		user.setDeleted(false);
+		user.setRole(UserRole.passenger);
 		return user;
 	}
 
@@ -105,5 +120,22 @@ public abstract class AbstractServicesTest {
 		obj.setCarId(car.getId());
 		obj.setCarOptionId(carOption.getId());
 		return obj;
+	}
+
+	public static Order createOrder(Car car, Rate rate, User userClient) {
+
+		Calendar instance = Calendar.getInstance();
+
+		order.setArrivalAddress("г.Гродно");
+		order.setDepartureAddress("г.Минск");
+		order.setCarId(car.getId());
+		order.setDeleted(false);
+		order.setDistance(265.0);
+		order.setInactivityMinutes(15);
+		instance.add(Calendar.MINUTE, 320);
+		order.setOrderEnd(new Timestamp(instance.getTimeInMillis()));
+		order.setRateId(rate.getId());
+		order.setUserId(userClient.getId());
+		return order;
 	}
 }
