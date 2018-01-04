@@ -8,7 +8,6 @@ public class Order {
 	private Integer id;
 	private Integer carId;
 	private Integer userId;
-	private Timestamp orderTime;
 	private Timestamp orderBegin;
 	private Timestamp orderEnd;
 	private Double distance;
@@ -24,9 +23,12 @@ public class Order {
 	public Order() {
 	}
 
-	public Order(Integer id, Integer carId, Integer userId, Timestamp orderTime, Timestamp orderBegin,
-			Timestamp orderEnd, Double distance, Double summ, Integer rateId, String departureAddress,
-			String arrivalAddress, Integer inactivityMinutes, Boolean deleted, Timestamp created, Timestamp modified) {
+	public Order(Integer id, Integer carId, Integer userId,
+			Timestamp orderTime, Timestamp orderBegin, Timestamp orderEnd,
+			Double distance, Double summ, Integer rateId,
+			String departureAddress, String arrivalAddress,
+			Integer inactivityMinutes, Boolean deleted, Timestamp created,
+			Timestamp modified) {
 		this.id = id;
 		this.carId = carId;
 		this.userId = userId;
@@ -168,18 +170,29 @@ public class Order {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((arrivalAddress == null) ? 0 : arrivalAddress.hashCode());
+		result = prime * result
+				+ ((arrivalAddress == null) ? 0 : arrivalAddress.hashCode());
 		result = prime * result + ((carId == null) ? 0 : carId.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
-		result = prime * result + ((departureAddress == null) ? 0 : departureAddress.hashCode());
-		result = prime * result + ((distance == null) ? 0 : distance.hashCode());
+		result = prime
+				* result
+				+ ((departureAddress == null) ? 0 : departureAddress.hashCode());
+		result = prime * result
+				+ ((distance == null) ? 0 : distance.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((inactivityMinutes == null) ? 0 : inactivityMinutes.hashCode());
-		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
-		result = prime * result + ((orderBegin == null) ? 0 : orderBegin.hashCode());
-		result = prime * result + ((orderEnd == null) ? 0 : orderEnd.hashCode());
-		result = prime * result + ((orderTime == null) ? 0 : orderTime.hashCode());
+		result = prime
+				* result
+				+ ((inactivityMinutes == null) ? 0 : inactivityMinutes
+						.hashCode());
+		result = prime * result
+				+ ((modified == null) ? 0 : modified.hashCode());
+		result = prime * result
+				+ ((orderBegin == null) ? 0 : orderBegin.hashCode());
+		result = prime * result
+				+ ((orderEnd == null) ? 0 : orderEnd.hashCode());
+		result = prime * result
+				+ ((orderTime == null) ? 0 : orderTime.hashCode());
 		result = prime * result + ((rateId == null) ? 0 : rateId.hashCode());
 		result = prime * result + ((summ == null) ? 0 : summ.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
@@ -275,10 +288,13 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", carId=" + carId + ", userId=" + userId + ", orderTime=" + orderTime
-				+ ", orderBegin=" + orderBegin + ", orderEnd=" + orderEnd + ", distance=" + distance + ", summ=" + summ
-				+ ", rateId=" + rateId + ", departureAddress=" + departureAddress + ", arrivalAddress=" + arrivalAddress
-				+ ", inactivityMinutes=" + inactivityMinutes + ", deleted=" + deleted + ", created=" + created
-				+ ", modified=" + modified + "]";
+		return "Order [id=" + id + ", carId=" + carId + ", userId=" + userId
+				+ ", orderTime=" + orderTime + ", orderBegin=" + orderBegin
+				+ ", orderEnd=" + orderEnd + ", distance=" + distance
+				+ ", summ=" + summ + ", rateId=" + rateId
+				+ ", departureAddress=" + departureAddress
+				+ ", arrivalAddress=" + arrivalAddress + ", inactivityMinutes="
+				+ inactivityMinutes + ", deleted=" + deleted + ", created="
+				+ created + ", modified=" + modified + "]";
 	}
 }
