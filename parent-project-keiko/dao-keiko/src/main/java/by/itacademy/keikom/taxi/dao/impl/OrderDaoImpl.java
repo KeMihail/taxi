@@ -40,24 +40,23 @@ public class OrderDaoImpl extends AbstractDaoImpl implements IOrderDao {
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
 						"insert into \"order\" (car_id,user_id,order_time,order_begin,order_end,distance,summ,rate_id,departure_address,arrival_address,inactivity_minutes,created) \r\n"
-								+ "values (?,?,?,?,?,?,order_sum(?,?,?),?,?,?,?,?);",
+								+ "values (?,?,?,?,?,order_sum(?,?,?),?,?,?,?,?);",
 						Statement.RETURN_GENERATED_KEYS)) {
 
 			LOGGER.info("execute SQL: Create new order");
 			pst.setInt(1, order.getCarId());
 			pst.setInt(2, order.getUserId());
-			pst.setTimestamp(3, order.getOrderTime());
-			pst.setTimestamp(4, order.getOrderBegin());
-			pst.setTimestamp(5, order.getOrderEnd());
-			pst.setDouble(6, order.getDistance());
-			pst.setInt(7, order.getRateId());
-			pst.setDouble(8, order.getDistance());
-			pst.setDouble(9, order.getInactivityMinutes());
-			pst.setInt(10, order.getRateId());
-			pst.setString(11, order.getDepartureAddress());
-			pst.setString(12, order.getArrivalAddress());
-			pst.setDouble(13, order.getInactivityMinutes());
-			pst.setTimestamp(14, order.getCreated());
+			pst.setTimestamp(3, order.getOrderBegin());
+			pst.setTimestamp(4, order.getOrderEnd());
+			pst.setDouble(5, order.getDistance());
+			pst.setInt(6, order.getRateId());
+			pst.setDouble(7, order.getDistance());
+			pst.setDouble(8, order.getInactivityMinutes());
+			pst.setInt(9, order.getRateId());
+			pst.setString(10, order.getDepartureAddress());
+			pst.setString(11, order.getArrivalAddress());
+			pst.setDouble(12, order.getInactivityMinutes());
+			pst.setTimestamp(13, order.getCreated());
 			pst.executeUpdate();
 
 			ResultSet rs = pst.getGeneratedKeys();
@@ -86,20 +85,19 @@ public class OrderDaoImpl extends AbstractDaoImpl implements IOrderDao {
 	public void update(Order order) {
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select order_update(?,?,?,?,?,?,?,?,?,?,?,?);")) {
+				PreparedStatement pst = connect.prepareStatement("select order_update(?,?,?,?,?,?,?,?,?,?,?);")) {
 			LOGGER.info("execute SQL: Update order");
 			pst.setInt(1, order.getId());
 			pst.setInt(2, order.getCarId());
 			pst.setInt(3, order.getUserId());
-			pst.setTimestamp(4, order.getOrderTime());
-			pst.setTimestamp(5, order.getOrderBegin());
-			pst.setTimestamp(6, order.getOrderEnd());
-			pst.setDouble(7, order.getDistance());
-			pst.setInt(8, order.getRateId());
-			pst.setString(9, order.getDepartureAddress());
-			pst.setString(10, order.getArrivalAddress());
-			pst.setDouble(11, order.getInactivityMinutes());
-			pst.setTimestamp(12, order.getModified());
+			pst.setTimestamp(4, order.getOrderBegin());
+			pst.setTimestamp(5, order.getOrderEnd());
+			pst.setDouble(6, order.getDistance());
+			pst.setInt(7, order.getRateId());
+			pst.setString(8, order.getDepartureAddress());
+			pst.setString(9, order.getArrivalAddress());
+			pst.setDouble(10, order.getInactivityMinutes());
+			pst.setTimestamp(11, order.getModified());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			LOGGER.error("Error from method update {}", e.getMessage());

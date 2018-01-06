@@ -27,7 +27,7 @@ public abstract class AbstractServicesTest {
 
 		Brand brand = new Brand();
 		brand.setName("Рено");
-		brand.setCreated(new Timestamp(new Date().getTime()));
+
 		return brand;
 	}
 
@@ -57,8 +57,7 @@ public abstract class AbstractServicesTest {
 		User user = new User();
 		user.setName("Миша");
 		user.setAddress("г.Гродно");
-		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd")
-				.parse("1984-07-28").getTime()));
+		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("1984-07-28").getTime()));
 		user.setEmail("Mihaila4038@yandex.ru");
 		user.setLastName("Кейко");
 		user.setPhoneNumber("80297875512");
@@ -72,8 +71,7 @@ public abstract class AbstractServicesTest {
 		User user = new User();
 		user.setName("Оля");
 		user.setAddress("г.Гродно");
-		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd")
-				.parse("1984-04-22").getTime()));
+		user.setBirthday(new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("1984-04-22").getTime()));
 		user.setEmail("Olga@yandex.ru");
 		user.setLastName("Кейко");
 		user.setPhoneNumber("80445006793");

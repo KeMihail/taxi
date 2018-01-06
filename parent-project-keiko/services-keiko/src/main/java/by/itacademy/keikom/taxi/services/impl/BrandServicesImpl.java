@@ -26,8 +26,9 @@ public class BrandServicesImpl implements IBrandServices {
 	@Override
 	public Brand save(Brand brand) {
 
+		brand.setModified(new Timestamp(new Date().getTime()));
+
 		if (brand.getId() != null) {
-			brand.setModified(new Timestamp(new Date().getTime()));
 			dao.update(brand);
 		} else {
 			brand.setCreated(new Timestamp(new Date().getTime()));
@@ -51,5 +52,4 @@ public class BrandServicesImpl implements IBrandServices {
 	public List<Brand> getAll() {
 		return dao.getAll();
 	}
-
 }

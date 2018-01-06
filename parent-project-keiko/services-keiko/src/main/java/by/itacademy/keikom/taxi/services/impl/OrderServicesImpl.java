@@ -29,7 +29,6 @@ public class OrderServicesImpl implements IOrder {
 
 		Calendar instance = Calendar.getInstance();
 
-		order.setOrderTime(new Timestamp(instance.getTimeInMillis()));
 		instance.add(Calendar.MINUTE, 5);
 		order.setOrderBegin(new Timestamp(instance.getTimeInMillis()));
 

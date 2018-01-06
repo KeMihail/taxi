@@ -62,10 +62,9 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 
 	@Override
 	public void delete(Integer id) {
-		// delete from model where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select model_delete(?);")) {
+				PreparedStatement pst = connect.prepareStatement("delete from model where id = ?")) {
 			LOGGER.info("execute SQL: Delete model");
 			pst.setInt(1, id);
 			pst.executeUpdate();

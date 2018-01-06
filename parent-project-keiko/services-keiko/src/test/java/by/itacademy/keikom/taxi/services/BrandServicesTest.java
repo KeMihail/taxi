@@ -1,5 +1,8 @@
 package by.itacademy.keikom.taxi.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -12,6 +15,7 @@ public class BrandServicesTest extends AbstractServicesTest {
 
 	private static BrandServicesImpl services = BrandServicesImpl.getInstance();
 	private static final Logger LOGGER = LoggerFactory.getLogger(LegalEntityServicesTest.class);
+	private List<Brand> list = new ArrayList<Brand>();
 
 	@Test
 	public void testGRUD() {
@@ -26,22 +30,27 @@ public class BrandServicesTest extends AbstractServicesTest {
 
 		brand = createBrand();
 		services.save(brand);
-		Brand brand_1 = services.getById(brand.getId());
-		Assert.assertNotNull(brand_1);
+		Brand brand1 = services.getById(brand.getId());
+		Assert.assertNotNull(brand1);
 
-		// maybe this check is unnecessary:
-		Brand brand_2 = services.getById(brand.getId());
-		Assert.assertEquals(brand, brand_2);
+		Brand brand2 = services.getById(brand.getId());
+		Assert.assertEquals(brand.getId(), brand2.getId());
+		Assert.assertEquals(brand.getName(), brand2.getName());
+		Assert.assertEquals(brand.getCreated(), brand2.getCreated());
+		Assert.assertEquals(brand.getModified(), brand2.getModified());
 
 		brand.setName("Ауди");
 		services.save(brand);
-		Brand brand_3 = services.getById(brand.getId());
-		Assert.assertEquals(brand_3, brand);
+		Brand brand3 = services.getById(brand.getId());
+		Assert.assertEquals(brand.getId(), brand3.getId());
+		Assert.assertEquals(brand.getName(), brand3.getName());
+		Assert.assertEquals(brand.getCreated(), brand3.getCreated());
+		Assert.assertEquals(brand.getModified(), brand3.getModified());
+
+		list = services.getAll();
+		Assert.assertNotNull(list);
 
 		services.delete(brand.getId());
-
-		Assert.assertNull(services.getById(brand.getId()).getName());
-		Assert.assertNull(services.getById(brand.getId()).getCreated());
-		Assert.assertNull(services.getById(brand.getId()).getModified());
+		Assert.assertNull(services.getById(brand.getId()));
 	}
 }
