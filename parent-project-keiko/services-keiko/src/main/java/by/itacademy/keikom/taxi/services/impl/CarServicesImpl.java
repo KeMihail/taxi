@@ -25,13 +25,14 @@ public class CarServicesImpl implements ICarServices {
 
 	@Override
 	public Car save(Car car) {
-		if (car.getId() == null) {
+		car.setModified(new Timestamp(new Date().getTime()));
+
+		if (car.getId() != null) {
+			dao.update(car);
+		} else {
 			car.setCreated(new Timestamp(new Date().getTime()));
 			Integer id = dao.create(car);
 			car.setId(id);
-		} else {
-			car.setModified(new Timestamp(new Date().getTime()));
-			dao.update(car);
 		}
 		return car;
 	}

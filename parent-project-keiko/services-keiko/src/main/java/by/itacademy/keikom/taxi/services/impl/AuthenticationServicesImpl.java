@@ -26,8 +26,9 @@ public class AuthenticationServicesImpl implements IAuthenticationServices {
 	@Override
 	public Authentication save(Authentication authentication) {
 
+		authentication.setModified(new Timestamp(new Date().getTime()));
+
 		if (authentication.getCreated() != null) {
-			authentication.setModified(new Timestamp(new Date().getTime()));
 			dao.update(authentication);
 		} else {
 			authentication.setCreated(new Timestamp(new Date().getTime()));

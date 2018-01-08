@@ -6,7 +6,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
 
 public interface IAuthenticationDao {
 
-	Integer create(Authentication authentication);
+	void create(Authentication authentication);
 
 	void delete(Integer id);
 

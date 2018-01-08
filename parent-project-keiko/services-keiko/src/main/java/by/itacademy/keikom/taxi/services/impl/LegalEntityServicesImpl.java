@@ -7,8 +7,9 @@ import java.util.List;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.impl.LegalEntityDaoImpl;
 import by.itacademy.keikom.taxi.services.ILegalEntityServices;
+import by.itacademy.keikom.taxi.services.exeption.NotValidPhoneNumberException;
 
-public class LegalEntityServicesImpl implements ILegalEntityServices {
+public class LegalEntityServicesImpl extends AbstractServicesImpl implements ILegalEntityServices {
 	private static LegalEntityServicesImpl instance = null;
 	private static LegalEntityDaoImpl dao = LegalEntityDaoImpl.getInstance();
 
@@ -23,16 +24,25 @@ public class LegalEntityServicesImpl implements ILegalEntityServices {
 	}
 
 	@Override
-	public LegalEntity save(LegalEntity obj) {
-		if (obj.getId() == null) {
-			obj.setCreated(new Timestamp(new Date().getTime()));
-			Integer id = dao.create(obj);
-			obj.setId(id);
-		} else {
-			obj.setModified(new Timestamp(new Date().getTime()));
-			dao.update(obj);
+	public LegalEntity save(LegalEntity legalEntity) {
+
+		if (!validateEmailAddress(legalEntity.getEmail())) {
+			legalEntity.setEmail(null);
 		}
-		return obj;
+
+		if (!validatePhoneNumber(legalEntity.getPhone_number())) {
+			throw new NotValidPhoneNumberException();
+		}
+
+		legalEntity.setModified(new Timestamp(new Date().getTime()));
+		if (legalEntity.getId() != null) {
+			dao.update(legalEntity);
+		} else {
+			legalEntity.setCreated(new Timestamp(new Date().getTime()));
+			Integer id = dao.create(legalEntity);
+			legalEntity.setId(id);
+		}
+		return legalEntity;
 	}
 
 	@Override
@@ -49,5 +59,4 @@ public class LegalEntityServicesImpl implements ILegalEntityServices {
 	public List<LegalEntity> getAll() {
 		return dao.getAll();
 	}
-
 }

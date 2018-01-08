@@ -1,7 +1,6 @@
 package by.itacademy.keikom.taxi.services;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -16,9 +15,6 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.dao.enums.EBodyType;
-import by.itacademy.keikom.taxi.dao.enums.ECarKit;
-import by.itacademy.keikom.taxi.dao.enums.EEngineType;
 import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.CarServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.LegalEntityServicesImpl;
@@ -28,8 +24,9 @@ import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 public class CarServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CarServicesTest.class);
+
 	private static CarServicesImpl services = CarServicesImpl.getInstance();
-	private List<Car> list = new ArrayList<Car>();
+	private List<Car> list;
 
 	private static Model model = new Model();
 	private static ModelServicesImpl modelServices = ModelServicesImpl.getInstance();
@@ -85,22 +82,35 @@ public class CarServicesTest extends AbstractServicesTest {
 		services.save(car);
 		Assert.assertNotNull(services.getById(car.getId()));
 
-		Car car_1 = services.getById(car.getId());
-		Assert.assertEquals(car_1, car);
+		Car car1 = services.getById(car.getId());
+		Assert.assertEquals(car1.getId(), car.getId());
+		Assert.assertEquals(car1.getUserId(), car.getUserId());
+		Assert.assertEquals(car1.getReleaseYear(), car.getReleaseYear());
+		Assert.assertEquals(car1.getModelId(), car.getModelId());
+		Assert.assertEquals(car1.getLegalEntityId(), car.getLegalEntityId());
+		Assert.assertEquals(car1.getStatus(), car.getStatus());
+		Assert.assertEquals(car1.getCreated(), car.getCreated());
+		Assert.assertEquals(car1.getModified(), car.getModified());
 
 		car.setReleaseYear(2010);
 		services.save(car);
 		Assert.assertNotNull(services.getById(car.getId()));
 
-		Car car_2 = services.getById(car.getId());
-		Assert.assertEquals(car, car_2);
+		Car car2 = services.getById(car.getId());
+		Assert.assertEquals(car2.getId(), car.getId());
+		Assert.assertEquals(car2.getUserId(), car.getUserId());
+		Assert.assertEquals(car2.getReleaseYear(), car.getReleaseYear());
+		Assert.assertEquals(car2.getModelId(), car.getModelId());
+		Assert.assertEquals(car2.getLegalEntityId(), car.getLegalEntityId());
+		Assert.assertEquals(car2.getStatus(), car.getStatus());
+		Assert.assertEquals(car2.getCreated(), car.getCreated());
+		Assert.assertEquals(car2.getModified(), car.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
 		services.delete(car.getId());
 
-		Assert.assertNull(services.getById(car.getId()).getCreated());
-		Assert.assertNull(services.getById(car.getId()).getModified());
+		Assert.assertNull(services.getById(car.getId()));
 	}
 }

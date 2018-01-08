@@ -1,7 +1,6 @@
 package by.itacademy.keikom.taxi.services;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -18,11 +17,13 @@ import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
 public class AuthenticationServicesTest extends AbstractServicesTest {
 
-	private static AuthenticationServicesImpl services = AuthenticationServicesImpl.getInstance();
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationServicesTest.class);
+
+	private static AuthenticationServicesImpl services = AuthenticationServicesImpl.getInstance();
+	private List<Authentication> list;
+
 	private static UserServicesImpl userServices = UserServicesImpl.getInstance();
-	private static User user = new User();
-	private List<Authentication> list = new ArrayList<Authentication>();
+	private static User user;
 
 	@BeforeClass
 	public static void prepareTestData() throws ParseException {
@@ -51,20 +52,28 @@ public class AuthenticationServicesTest extends AbstractServicesTest {
 		services.save(authentication);
 		Assert.assertNotNull(services.getById(authentication.getUserId()));
 
+		Authentication authentication1 = services.getById(authentication.getUserId());
+		Assert.assertEquals(authentication1.getUserId(), authentication.getUserId());
+		Assert.assertEquals(authentication1.getLogin(), authentication.getLogin());
+		Assert.assertEquals(authentication1.getPassword(), authentication.getPassword());
+		Assert.assertEquals(authentication1.getCreated(), authentication.getCreated());
+		Assert.assertEquals(authentication1.getModified(), authentication.getModified());
+
 		authentication.setLogin("login_update");
 		services.save(authentication);
-		Assert.assertNotNull(authentication);
+		Assert.assertNotNull(services.getById(authentication.getUserId()));
 
-		Authentication authentication_1 = services.getById(authentication.getUserId());
-		Assert.assertEquals(authentication_1, authentication);
+		Authentication authentication2 = services.getById(authentication.getUserId());
+		Assert.assertEquals(authentication2.getUserId(), authentication.getUserId());
+		Assert.assertEquals(authentication2.getLogin(), authentication.getLogin());
+		Assert.assertEquals(authentication2.getPassword(), authentication.getPassword());
+		Assert.assertEquals(authentication2.getCreated(), authentication.getCreated());
+		Assert.assertEquals(authentication2.getModified(), authentication.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
 		services.delete(authentication.getUserId());
-		Assert.assertNull(services.getById(authentication.getUserId()).getLogin());
-		Assert.assertNull(services.getById(authentication.getUserId()).getPassword());
-		Assert.assertNull(services.getById(authentication.getUserId()).getCreated());
-		Assert.assertNull(services.getById(authentication.getUserId()).getModified());
+		Assert.assertNull(services.getById(authentication.getUserId()));
 	}
 }

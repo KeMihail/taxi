@@ -35,15 +35,17 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 		try (Connection connect = getConnection();
 				PreparedStatement pst = connect.prepareStatement(
-						"insert into rate (name,price_landing,price_kilometr,price_minute_wait,created)"
-								+ "values (?,?,?,?,?);",
+						"insert into rate (name,price_landing,price_kilometr,price_minute_wait,created,modified)"
+								+ "values (?,?,?,?,?,?)",
 						Statement.RETURN_GENERATED_KEYS)) {
-			LOGGER.info("execute SQL: create new rate");
+
+			LOGGER.info("execute SQL: create new Rate");
 			pst.setString(1, rate.getName());
 			pst.setDouble(2, rate.getPriceLanding());
 			pst.setDouble(3, rate.getPriceKilometr());
 			pst.setDouble(4, rate.getPriceMinuteWait());
 			pst.setTimestamp(5, rate.getCreated());
+			pst.setTimestamp(6, rate.getModified());
 			pst.executeUpdate();
 
 			ResultSet rs = pst.getGeneratedKeys();
@@ -57,11 +59,11 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 	@Override
 	public void delete(Integer id) {
-		// delete from rate where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select rate_delete(?);")) {
-			LOGGER.info("execute SQL: delete one rate");
+				PreparedStatement pst = connect.prepareStatement("delete from rate where id = ?")) {
+			LOGGER.info("execute SQL: delete one Rate");
+
 			pst.setInt(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -71,18 +73,19 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 	@Override
 	public void update(Rate rate) {
-		// update rate set name = ?, price_landing = ?, price_kilometr = ?,
-		// price_minute_wait = ?, modified = ? where id = ?
-		;
+
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select rate_update(?,?,?,?,?,?);")) {
-			LOGGER.info("execute SQL: update one rate");
-			pst.setInt(1, rate.getId());
-			pst.setString(2, rate.getName());
-			pst.setDouble(3, rate.getPriceLanding());
-			pst.setDouble(4, rate.getPriceKilometr());
-			pst.setDouble(5, rate.getPriceMinuteWait());
-			pst.setTimestamp(6, rate.getModified());
+				PreparedStatement pst = connect
+						.prepareStatement("update rate set name = ?, price_landing = ?, price_kilometr = ?,\r\n"
+								+ "price_minute_wait = ?, modified = ? where id = ?")) {
+			LOGGER.info("execute SQL: update one Rate");
+
+			pst.setString(1, rate.getName());
+			pst.setDouble(2, rate.getPriceLanding());
+			pst.setDouble(3, rate.getPriceKilometr());
+			pst.setDouble(4, rate.getPriceMinuteWait());
+			pst.setTimestamp(5, rate.getModified());
+			pst.setInt(6, rate.getId());
 			pst.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.error("Error from method update {}", e.getMessage());
@@ -91,16 +94,15 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 	@Override
 	public Rate getById(Integer id) {
-		// select * from rate where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from rate_getById(?);")) {
-			LOGGER.info("execute SQL: show one rate");
+				PreparedStatement pst = connect.prepareStatement("select * from rate where id = ?")) {
+			LOGGER.info("execute SQL: show one Rate");
+
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				return new Rate(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5),
-						rs.getTimestamp(6), rs.getTimestamp(7));
+				return parseRate(rs);
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getById {}", e.getMessage());
@@ -110,19 +112,31 @@ public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 	@Override
 	public List<Rate> getAll() {
-		// select * from rate;
 
 		List<Rate> list = new ArrayList<Rate>();
 
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
-			ResultSet rs = st.executeQuery("select * from rate_getAll();");
+			ResultSet rs = st.executeQuery("select * from rate");
+			LOGGER.info("execute SQL: show all Rate");
+
 			while (rs.next()) {
-				list.add(new Rate(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5),
-						rs.getTimestamp(6), rs.getTimestamp(7)));
+				list.add(parseRate(rs));
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getAll {}", e.getMessage());
 		}
 		return list;
+	}
+
+	private Rate parseRate(ResultSet rs) throws SQLException {
+		Rate rate = new Rate();
+		rate.setId(rs.getInt(1));
+		rate.setName(rs.getString(2));
+		rate.setPriceLanding(rs.getDouble(3));
+		rate.setPriceKilometr(rs.getDouble(4));
+		rate.setPriceMinuteWait(rs.getDouble(5));
+		rate.setCreated(rs.getTimestamp(6));
+		rate.setModified(rs.getTimestamp(7));
+		return rate;
 	}
 }

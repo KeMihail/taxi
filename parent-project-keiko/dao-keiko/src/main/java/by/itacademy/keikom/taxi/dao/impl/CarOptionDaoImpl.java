@@ -15,7 +15,7 @@ import by.itacademy.keikom.taxi.dao.ICarOptionDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
-public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
+public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, parseCarOption {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CarOptionDaoImpl.class);
 	private static CarOptionDaoImpl instance = null;
@@ -34,11 +34,14 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 	public Integer create(CarOption carOption) {
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("insert into car_option(name,created) VALUES(?,?);",
+				PreparedStatement pst = connect.prepareStatement(
+						"insert into car_option(name,created,modified) VALUES(?,?,?)",
 						Statement.RETURN_GENERATED_KEYS)) {
-			LOGGER.info("execute SQL: create new option to car");
+			LOGGER.info("execute SQL: create new option to Car");
+
 			pst.setString(1, carOption.getName());
 			pst.setTimestamp(2, carOption.getCreated());
+			pst.setTimestamp(3, carOption.getModified());
 			pst.executeUpdate();
 
 			ResultSet rs = pst.getGeneratedKeys();
@@ -53,11 +56,11 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 
 	@Override
 	public void delete(Integer id) {
-		// delete from car_option where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select carOption_delete(?);")) {
-			LOGGER.info("execute SQL: delete one option to car");
+				PreparedStatement pst = connect.prepareStatement("delete from car_option where id = ?")) {
+			LOGGER.info("execute SQL: delete one option to Car");
+
 			pst.setInt(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -67,14 +70,15 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 
 	@Override
 	public void update(CarOption carOption) {
-		// update car_option set name = ?, modified = ? where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select carOption_update(?,?,?);")) {
-			LOGGER.info("execute SQL: update one option to car");
-			pst.setInt(1, carOption.getId());
-			pst.setString(2, carOption.getName());
-			pst.setTimestamp(3, carOption.getModified());
+				PreparedStatement pst = connect
+						.prepareStatement("update car_option set name = ?, modified = ? where id = ?")) {
+			LOGGER.info("execute SQL: update one option to Car");
+
+			pst.setString(1, carOption.getName());
+			pst.setTimestamp(2, carOption.getModified());
+			pst.setInt(3, carOption.getId());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			LOGGER.error("Error from method update {}", e.getMessage());
@@ -83,15 +87,16 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 
 	@Override
 	public CarOption getById(Integer id) {
-		// select * from car_option where id = ?;
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from carOption_getById(?);")) {
-			LOGGER.info("execute SQL: show one option car");
+				PreparedStatement pst = connect.prepareStatement("select * from car_option where id = ?")) {
+			LOGGER.info("execute SQL: show one option Car");
+
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				return new CarOption(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getTimestamp(4));
+
+				return parseCarOption(rs);
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method update {}", e.getMessage());
@@ -108,7 +113,7 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 			LOGGER.info("execute SQL: show all option car");
 			ResultSet rs = st.executeQuery("select * from carOption_getAll();");
 			while (rs.next()) {
-				list.add(new CarOption(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getTimestamp(4)));
+				list.add(parseCarOption(rs));
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method update {}", e.getMessage());
@@ -116,4 +121,12 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 		return list;
 	}
 
+	private CarOption parseCarOption(ResultSet rs) throws SQLException {
+		CarOption carOption = new CarOption();
+		carOption.setId(rs.getInt(1));
+		carOption.setName(rs.getString(2));
+		carOption.setCreated(rs.getTimestamp(3));
+		carOption.setModified(rs.getTimestamp(4));
+		return carOption;
+	}
 }

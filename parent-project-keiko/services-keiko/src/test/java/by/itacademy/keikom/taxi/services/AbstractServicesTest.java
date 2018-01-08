@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
@@ -18,6 +17,7 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.enums.EBodyType;
 import by.itacademy.keikom.taxi.dao.enums.ECarKit;
+import by.itacademy.keikom.taxi.dao.enums.ECarStatus;
 import by.itacademy.keikom.taxi.dao.enums.EEngineType;
 import by.itacademy.keikom.taxi.dao.enums.UserRole;
 
@@ -35,10 +35,10 @@ public abstract class AbstractServicesTest {
 
 		Model model = new Model();
 		model.setName("Лагуна");
-		model.setBodyType(EBodyType.МиниВен);
+		model.setBodyType(EBodyType.Minivan);
 		model.setBrandId(brand.getId());
-		model.setCarCit(ECarKit.Классическая);
-		model.setEngineType(EEngineType.ГазБензин);
+		model.setCarCit(ECarKit.Classic);
+		model.setEngineType(EEngineType.Diesel);
 		return model;
 	}
 
@@ -87,8 +87,7 @@ public abstract class AbstractServicesTest {
 		car.setUserId(user.getId());
 		car.setModelId(model.getId());
 		car.setLegalEntityId(legalEntity.getId());
-		car.setDeleted(false);
-		car.setStatus(false);
+		car.setStatus(ECarStatus.Online);
 		return car;
 	}
 

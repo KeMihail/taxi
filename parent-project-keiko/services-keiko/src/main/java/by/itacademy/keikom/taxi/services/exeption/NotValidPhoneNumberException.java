@@ -1,4 +1,4 @@
-package by.itacademy.keikom.taxi.dao.exeption;
+package by.itacademy.keikom.taxi.services.exeption;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

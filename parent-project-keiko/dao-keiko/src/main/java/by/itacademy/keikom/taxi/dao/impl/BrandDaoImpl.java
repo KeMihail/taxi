@@ -98,12 +98,7 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 
-				Brand brand = new Brand();
-				brand.setId(rs.getInt(1));
-				brand.setName(rs.getString(2));
-				brand.setCreated(rs.getTimestamp(3));
-				brand.setModified(rs.getTimestamp(4));
-				return brand;
+				return parseBrand(rs);
 
 			}
 		} catch (SQLException e) {
@@ -116,7 +111,6 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 	public List<Brand> getAll() {
 
 		List<Brand> list = new ArrayList<Brand>();
-		Brand brand = new Brand();
 
 		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
 
@@ -124,16 +118,20 @@ public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 			ResultSet rs = st.executeQuery("select * from brand");
 			while (rs.next()) {
 
-				brand.setId(rs.getInt(1));
-				brand.setName(rs.getString(2));
-				brand.setCreated(rs.getTimestamp(3));
-				brand.setModified(rs.getTimestamp(4));
-
-				list.add(brand);
+				list.add(parseBrand(rs));
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Error from method getAll {}", e.getMessage());
 		}
 		return list;
+	}
+
+	private Brand parseBrand(ResultSet rs) throws SQLException {
+		Brand brand = new Brand();
+		brand.setId(rs.getInt(1));
+		brand.setName(rs.getString(2));
+		brand.setCreated(rs.getTimestamp(3));
+		brand.setModified(rs.getTimestamp(4));
+		return brand;
 	}
 }

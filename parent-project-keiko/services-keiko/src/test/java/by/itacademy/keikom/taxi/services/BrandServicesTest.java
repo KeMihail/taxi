@@ -1,6 +1,5 @@
 package by.itacademy.keikom.taxi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -15,7 +14,7 @@ public class BrandServicesTest extends AbstractServicesTest {
 
 	private static BrandServicesImpl services = BrandServicesImpl.getInstance();
 	private static final Logger LOGGER = LoggerFactory.getLogger(LegalEntityServicesTest.class);
-	private List<Brand> list = new ArrayList<Brand>();
+	private List<Brand> list;
 
 	@Test
 	public void testGRUD() {

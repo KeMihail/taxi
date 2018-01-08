@@ -7,8 +7,10 @@ import java.util.List;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.impl.UserDaoImpl;
 import by.itacademy.keikom.taxi.services.IUserServices;
+import by.itacademy.keikom.taxi.services.exeption.NotValidBirthdayException;
+import by.itacademy.keikom.taxi.services.exeption.NotValidPhoneNumberException;
 
-public class UserServicesImpl implements IUserServices {
+public class UserServicesImpl extends AbstractServicesImpl implements IUserServices {
 
 	private static UserDaoImpl dao = UserDaoImpl.getInstance();
 	private static UserServicesImpl instance = null;
@@ -25,13 +27,28 @@ public class UserServicesImpl implements IUserServices {
 
 	@Override
 	public User save(User user) {
-		if (user.getId() == null) {
+
+		if (!validateEmailAddress(user.getEmail())) {
+			user.setEmail(null);
+		}
+
+		if (!validatePhoneNumber(user.getPhoneNumber())) {
+			throw new NotValidPhoneNumberException();
+		}
+
+		if (!validateBirthday(user.getBirthday().toString())) {
+			throw new NotValidBirthdayException();
+		}
+
+		user.setModified(new Timestamp(new Date().getTime()));
+
+		if (user.getId() != null) {
+			dao.update(user);
+		} else {
 			user.setCreated(new Timestamp(new Date().getTime()));
 			Integer id = dao.create(user);
 			user.setId(id);
-		} else {
-			user.setModified(new Timestamp(new Date().getTime()));
-			dao.update(user);
+			;
 		}
 		return user;
 	}

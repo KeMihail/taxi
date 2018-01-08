@@ -1,6 +1,5 @@
 package by.itacademy.keikom.taxi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -15,7 +14,7 @@ public class RateServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RateServicesTest.class);
 	private static final RateServicesImpl services = RateServicesImpl.getInstance();
-	private List<Rate> list = new ArrayList<Rate>();
+	private List<Rate> list = null;
 
 	@Test
 	public void testGRUD() {
@@ -32,22 +31,33 @@ public class RateServicesTest extends AbstractServicesTest {
 		services.save(rate);
 		Assert.assertNotNull(services.getById(rate.getId()));
 
+		Rate rate1 = services.getById(rate.getId());
+		Assert.assertEquals(rate1.getId(), rate.getId());
+		Assert.assertEquals(rate1.getName(), rate.getName());
+		Assert.assertEquals(rate1.getPriceLanding(), rate.getPriceLanding());
+		Assert.assertEquals(rate1.getPriceKilometr(), rate.getPriceKilometr());
+		Assert.assertEquals(rate1.getPriceMinuteWait(), rate.getPriceMinuteWait());
+		Assert.assertEquals(rate1.getCreated(), rate.getCreated());
+		Assert.assertEquals(rate1.getModified(), rate.getModified());
+
 		rate.setName("Ночной");
 		services.save(rate);
 		Assert.assertNotNull(services.getById(rate.getId()));
 
-		Rate rate_1 = services.getById(rate.getId());
-		Assert.assertEquals(rate_1, rate);
+		Rate rate2 = services.getById(rate.getId());
+		Assert.assertEquals(rate2.getId(), rate.getId());
+		Assert.assertEquals(rate2.getName(), rate.getName());
+		Assert.assertEquals(rate2.getPriceLanding(), rate.getPriceLanding());
+		Assert.assertEquals(rate2.getPriceKilometr(), rate.getPriceKilometr());
+		Assert.assertEquals(rate2.getPriceMinuteWait(), rate.getPriceMinuteWait());
+		Assert.assertEquals(rate2.getCreated(), rate.getCreated());
+		Assert.assertEquals(rate2.getModified(), rate.getModified());
 
 		list = services.getAll();
-		Assert.assertNotNull(rate);
+		Assert.assertNotNull(list);
 
 		services.delete(rate.getId());
 
-		// fail ?: Assert.assertNull(services.getById(rate.getId()));
-
-		Assert.assertNull(services.getById(rate.getId()).getName());
-		Assert.assertNull(services.getById(rate.getId()).getCreated());
-		Assert.assertNull(services.getById(rate.getId()).getModified());
+		Assert.assertNull(services.getById(rate.getId()));
 	}
 }

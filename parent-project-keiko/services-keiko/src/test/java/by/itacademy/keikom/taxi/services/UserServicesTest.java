@@ -13,9 +13,10 @@ import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
 public class UserServicesTest extends AbstractServicesTest {
 
-	private static UserServicesImpl services = UserServicesImpl.getInstance();
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServicesTest.class);
-	private List<User> list = null;
+	private static UserServicesImpl services = UserServicesImpl.getInstance();
+
+	private List<User> list;
 
 	@Test
 	public void testGRUD() throws ParseException {
@@ -32,29 +33,41 @@ public class UserServicesTest extends AbstractServicesTest {
 		services.save(user);
 		Assert.assertNotNull(services.getById(user.getId()));
 
+		User user1 = services.getById(user.getId());
+		Assert.assertEquals(user.getId(), user1.getId());
+		Assert.assertEquals(user.getAddress(), user1.getAddress());
+		Assert.assertEquals(user.getEmail(), user1.getEmail());
+		Assert.assertEquals(user.getLastName(), user1.getLastName());
+		Assert.assertEquals(user.getName(), user1.getName());
+		Assert.assertEquals(user.getPhoneNumber(), user1.getPhoneNumber());
+		Assert.assertEquals(user.getBirthday(), user1.getBirthday());
+		Assert.assertEquals(user.getRole(), user1.getRole());
+		Assert.assertEquals(user.getDeleted(), user1.getDeleted());
+		Assert.assertEquals(user.getCreated(), user1.getCreated());
+		Assert.assertEquals(user.getModified(), user1.getModified());
+
 		user.setName("Оля");
 		services.save(user);
 		Assert.assertNotNull(services.getById(user.getId()));
 
-		User user_1 = services.getById(user.getId());
-		Assert.assertEquals(user_1, user);
+		User user2 = services.getById(user.getId());
+		Assert.assertEquals(user2.getId(), user.getId());
+		Assert.assertEquals(user2.getAddress(), user.getAddress());
+		Assert.assertEquals(user2.getEmail(), user.getEmail());
+		Assert.assertEquals(user2.getLastName(), user.getLastName());
+		Assert.assertEquals(user2.getName(), user.getName());
+		Assert.assertEquals(user2.getPhoneNumber(), user.getPhoneNumber());
+		Assert.assertEquals(user2.getBirthday(), user.getBirthday());
+		Assert.assertEquals(user2.getRole(), user.getRole());
+		Assert.assertEquals(user2.getDeleted(), user.getDeleted());
+		Assert.assertEquals(user2.getCreated(), user.getCreated());
+		Assert.assertEquals(user2.getModified(), user.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
 		services.delete(user.getId());
 		Assert.assertNull(services.getById(user.getId()));
-
-		// ?????:
-
-		/*
-		 * Assert.assertNull(services.getById(user.getId()).getEmail());
-		 * Assert.assertNull(services.getById(user.getId()).getLastName());
-		 * Assert.assertNull(services.getById(user.getId()).getName());
-		 * Assert.assertNull(services.getById(user.getId()).getPhoneNumber());
-		 * Assert.assertNull(services.getById(user.getId()).getBirthday());
-		 * Assert.assertNull(services.getById(user.getId()).getCreated());
-		 */
 
 	}
 }

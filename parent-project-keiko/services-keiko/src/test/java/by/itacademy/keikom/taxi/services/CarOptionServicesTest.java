@@ -1,6 +1,5 @@
 package by.itacademy.keikom.taxi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -13,9 +12,10 @@ import by.itacademy.keikom.taxi.services.impl.CarOptionServicesImpl;
 
 public class CarOptionServicesTest extends AbstractServicesTest {
 
-	private static final CarOptionServicesImpl services = CarOptionServicesImpl.getInstance();
 	private static final Logger LOGGER = LoggerFactory.getLogger(CarOptionServicesTest.class);
-	private List<CarOption> list = new ArrayList<CarOption>();
+
+	private static final CarOptionServicesImpl services = CarOptionServicesImpl.getInstance();
+	private List<CarOption> list;
 
 	@Test
 	public void testGRUD() {
@@ -32,22 +32,28 @@ public class CarOptionServicesTest extends AbstractServicesTest {
 
 		carOption = createCarOption();
 		services.save(carOption);
-		Assert.assertNotNull(carOption);
+		Assert.assertNotNull(services.getById(carOption.getId()));
+
+		CarOption carOption1 = services.getById(carOption.getId());
+		Assert.assertEquals(carOption1.getId(), carOption.getId());
+		Assert.assertEquals(carOption1.getName(), carOption.getName());
+		Assert.assertEquals(carOption1.getCreated(), carOption.getCreated());
+		Assert.assertEquals(carOption1.getModified(), carOption.getModified());
 
 		carOption.setName("Коженный салон");
 		services.save(carOption);
-		Assert.assertNotNull(carOption);
+		Assert.assertNotNull(services.getById(carOption.getId()));
 
-		CarOption carOption_1 = services.getById(carOption.getId());
-		Assert.assertEquals(carOption_1, carOption);
+		CarOption carOption2 = services.getById(carOption.getId());
+		Assert.assertEquals(carOption2.getId(), carOption.getId());
+		Assert.assertEquals(carOption2.getName(), carOption.getName());
+		Assert.assertEquals(carOption2.getCreated(), carOption.getCreated());
+		Assert.assertEquals(carOption2.getModified(), carOption.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
 		services.delete(carOption.getId());
-		Assert.assertNull(services.getById(carOption.getId()).getName());
-		Assert.assertNull(services.getById(carOption.getId()).getCreated());
-		Assert.assertNull(services.getById(carOption.getId()).getModified());
+		Assert.assertNull(services.getById(carOption.getId()));
 	}
-
 }

@@ -26,13 +26,15 @@ public class RateServicesImpl implements IRateServices {
 
 	@Override
 	public Rate save(Rate rate) {
-		if (rate.getId() == null) {
+
+		rate.setModified(new Timestamp(new Date().getTime()));
+
+		if (rate.getId() != null) {
+			dao.update(rate);
+		} else {
 			rate.setCreated(new Timestamp(new Date().getTime()));
 			Integer id = dao.create(rate);
 			rate.setId(id);
-		} else {
-			rate.setModified(new Timestamp(new Date().getTime()));
-			dao.update(rate);
 		}
 		return rate;
 	}
@@ -51,5 +53,4 @@ public class RateServicesImpl implements IRateServices {
 	public List<Rate> getAll() {
 		return dao.getAll();
 	}
-
 }

@@ -13,8 +13,9 @@ import by.itacademy.keikom.taxi.services.impl.LegalEntityServicesImpl;
 public class LegalEntityServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LegalEntityServicesTest.class);
+
 	private static LegalEntityServicesImpl services = LegalEntityServicesImpl.getInstance();
-	private List<LegalEntity> list = null;
+	private List<LegalEntity> list;
 
 	@Test
 	public void testGRUD() {
@@ -32,25 +33,32 @@ public class LegalEntityServicesTest extends AbstractServicesTest {
 		services.save(legalEntity);
 		Assert.assertNotNull(services.getById(legalEntity.getId()));
 
-		LegalEntity obj_1 = services.getById(legalEntity.getId());
-		Assert.assertEquals(obj_1, legalEntity);
+		LegalEntity legalEntity1 = services.getById(legalEntity.getId());
+		Assert.assertEquals(legalEntity1.getId(), legalEntity.getId());
+		Assert.assertEquals(legalEntity1.getName(), legalEntity.getName());
+		Assert.assertEquals(legalEntity1.getAddress(), legalEntity.getAddress());
+		Assert.assertEquals(legalEntity1.getPhone_number(), legalEntity.getPhone_number());
+		Assert.assertEquals(legalEntity1.getEmail(), legalEntity.getEmail());
+		Assert.assertEquals(legalEntity1.getCreated(), legalEntity.getCreated());
+		Assert.assertEquals(legalEntity1.getModified(), legalEntity.getModified());
 
 		legalEntity.setName("OAO Такси");
 		services.save(legalEntity);
 		Assert.assertNotNull(services.getById(legalEntity.getId()));
 
-		LegalEntity obj_3 = services.getById(legalEntity.getId());
-		Assert.assertEquals(obj_3, legalEntity);
+		LegalEntity legalEntity2 = services.getById(legalEntity.getId());
+		Assert.assertEquals(legalEntity2.getId(), legalEntity.getId());
+		Assert.assertEquals(legalEntity2.getName(), legalEntity.getName());
+		Assert.assertEquals(legalEntity2.getAddress(), legalEntity.getAddress());
+		Assert.assertEquals(legalEntity2.getPhone_number(), legalEntity.getPhone_number());
+		Assert.assertEquals(legalEntity2.getEmail(), legalEntity.getEmail());
+		Assert.assertEquals(legalEntity2.getCreated(), legalEntity.getCreated());
+		Assert.assertEquals(legalEntity2.getModified(), legalEntity.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
 		services.delete(legalEntity.getId());
-		Assert.assertNull(services.getById(legalEntity.getId()).getName());
-		Assert.assertNull(services.getById(legalEntity.getId()).getAddress());
-		Assert.assertNull(services.getById(legalEntity.getId()).getEmail());
-		Assert.assertNull(services.getById(legalEntity.getId()).getPhone_number());
-		Assert.assertNull(services.getById(legalEntity.getId()).getCreated());
-		Assert.assertNull(services.getById(legalEntity.getId()).getModified());
+		Assert.assertNull(services.getById(legalEntity.getId()));
 	}
 }

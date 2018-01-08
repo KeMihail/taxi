@@ -29,8 +29,9 @@ import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 public class Car2CarOptionServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Car2CarOptionServicesTest.class);
+	
 	private static final Car2CarOptionServicesImpl services = Car2CarOptionServicesImpl.getInstance();
-	private List<Car2CarOption> list = new ArrayList<Car2CarOption>();
+	private List<Car2CarOption> list;
 
 	private static CarServicesImpl carServices = CarServicesImpl.getInstance();
 	private static Car car;
@@ -38,21 +39,21 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 	private static CarOptionServicesImpl carOptionServices = CarOptionServicesImpl.getInstance();
 	private static CarOption carOption;
 	private static CarOption carOptionUpdate;
-
-	private static Model model = new Model();
+	
 	private static ModelServicesImpl modelServices = ModelServicesImpl.getInstance();
-
-	private static LegalEntity legalEntity;
+	private static Model model;
+	
 	private static LegalEntityServicesImpl legalEntityServices = LegalEntityServicesImpl.getInstance();
-
-	private static User user;
+	private static LegalEntity legalEntity;
+	
 	private static UserServicesImpl userServisec = UserServicesImpl.getInstance();
-
-	private static Brand brand;
+	private static User user;
+	
 	private static BrandServicesImpl brandServices = BrandServicesImpl.getInstance();
-
-	private static List<Integer> getByIdOption = null;
-	private static List<Integer> getByIdCar = null;
+	private static Brand brand;
+	
+	private static List<Integer> getByIdOption;
+	private static List<Integer> getByIdCar;
 
 	@BeforeClass
 	public static void prepareTestData() throws ParseException {
@@ -105,12 +106,18 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 		obj = createCar2CarOption(car, carOption);
 		services.create(obj);
 		Assert.assertNotNull(services.getById(obj));
+		
+		Car2CarOption obj1 = services.getById(obj);
+		Assert.assertEquals(obj1.getCarId(), obj.getCarId());
+		Assert.assertEquals(obj1.getCarOptionId(), obj.getCarOptionId());
 
 		Car2CarOption newObj = createCar2CarOption(car, carOptionUpdate);
 		services.update(obj, newObj);
-		Assert.assertNotNull(services.getById(obj));
-
-		Assert.assertEquals(newObj, services.getById(obj));
+		Assert.assertNotNull(services.getById(newObj));
+		
+		Car2CarOption obj2 = services.getById(newObj);
+		Assert.assertEquals(newObj.getCarId(), obj2.getCarId());
+		Assert.assertEquals(newObj.getCarOptionId(), obj2.getCarOptionId());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);

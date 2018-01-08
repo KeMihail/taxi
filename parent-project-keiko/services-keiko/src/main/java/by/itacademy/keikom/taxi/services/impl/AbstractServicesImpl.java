@@ -1,9 +1,9 @@
-package by.itacademy.keikom.taxi.dao.dbmodel;
+package by.itacademy.keikom.taxi.services.impl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AbstractDBModel {
+public class AbstractServicesImpl {
 
 	// the format of email addresses: ИмяПользователя@ИмяПочтовогоСервера (домен)
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern

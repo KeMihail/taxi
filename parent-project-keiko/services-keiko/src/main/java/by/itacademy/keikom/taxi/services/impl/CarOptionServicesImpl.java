@@ -26,8 +26,9 @@ public class CarOptionServicesImpl implements ICarOptionServices {
 	@Override
 	public CarOption save(CarOption carOption) {
 
+		carOption.setModified(new Timestamp(new Date().getTime()));
+
 		if (carOption.getId() != null) {
-			carOption.setModified(new Timestamp(new Date().getTime()));
 			dao.update(carOption);
 		} else {
 			carOption.setCreated(new Timestamp(new Date().getTime()));

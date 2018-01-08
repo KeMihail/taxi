@@ -27,8 +27,9 @@ public class ModelServicesImpl implements IModelServices {
 	@Override
 	public Model save(Model model) {
 
+		model.setModified(new Timestamp(new Date().getTime()));
+
 		if (model.getId() != null) {
-			model.setModified(new Timestamp(new Date().getTime()));
 			dao.update(model);
 		} else {
 			model.setCreated(new Timestamp(new Date().getTime()));
@@ -52,5 +53,4 @@ public class ModelServicesImpl implements IModelServices {
 	public List<Model> getAll() {
 		return dao.getAll();
 	}
-
 }

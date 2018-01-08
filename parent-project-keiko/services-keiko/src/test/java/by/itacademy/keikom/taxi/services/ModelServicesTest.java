@@ -1,6 +1,5 @@
 package by.itacademy.keikom.taxi.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -12,26 +11,25 @@ import org.slf4j.LoggerFactory;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
-import by.itacademy.keikom.taxi.dao.enums.EBodyType;
-import by.itacademy.keikom.taxi.dao.enums.ECarKit;
-import by.itacademy.keikom.taxi.dao.enums.EEngineType;
 import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.ModelServicesImpl;
 
 public class ModelServicesTest extends AbstractServicesTest {
 
-	private static BrandServicesImpl brandServices = BrandServicesImpl.getInstance();
-	private static ModelServicesImpl services = ModelServicesImpl.getInstance();
-	private static Brand brand;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModelServicesTest.class);
-	private static List<Model> list = null;
+
+	private static Brand brand;
+	private static BrandServicesImpl brandServices = BrandServicesImpl.getInstance();
+
+	private static ModelServicesImpl services = ModelServicesImpl.getInstance();
+	private static List<Model> list;
 
 	@BeforeClass
 	public static void prepareTestData() {
 		LOGGER.info("prepare data for ModelServicesTest");
+
 		brand = createBrand();
 		brandServices.save(brand);
-		list = new ArrayList<Model>();
 	}
 
 	@AfterClass
@@ -54,21 +52,35 @@ public class ModelServicesTest extends AbstractServicesTest {
 		services.save(model);
 		Assert.assertNotNull(model);
 
-		Model model_1 = services.getById(model.getId());
-		Assert.assertNotNull(model_1);
-		Assert.assertEquals(model_1, model);
+		Model model1 = services.getById(model.getId());
+		Assert.assertNotNull(model1);
+		Assert.assertEquals(model1.getId(), model.getId());
+		Assert.assertEquals(model1.getName(), model.getName());
+		Assert.assertEquals(model1.getBodyType(), model.getBodyType());
+		Assert.assertEquals(model1.getCarCit(), model.getCarCit());
+		Assert.assertEquals(model1.getEngineType(), model.getEngineType());
+		Assert.assertEquals(model1.getBrandId(), model.getBrandId());
+		Assert.assertEquals(model1.getCreated(), model.getCreated());
+		Assert.assertEquals(model1.getModified(), model.getModified());
 
 		model.setName("Опель");
 		services.save(model);
 		Assert.assertNotNull(services.getById(model.getId()));
 
-		Model model_2 = services.getById(model.getId());
-		Assert.assertEquals(model_2, model);
+		Model model2 = services.getById(model.getId());
+		Assert.assertEquals(model2.getId(), model.getId());
+		Assert.assertEquals(model2.getName(), model.getName());
+		Assert.assertEquals(model2.getBodyType(), model.getBodyType());
+		Assert.assertEquals(model2.getCarCit(), model.getCarCit());
+		Assert.assertEquals(model2.getEngineType(), model.getEngineType());
+		Assert.assertEquals(model2.getBrandId(), model.getBrandId());
+		Assert.assertEquals(model2.getCreated(), model.getCreated());
+		Assert.assertEquals(model2.getModified(), model.getModified());
 
 		list = services.getAll();
 		Assert.assertNotNull(list);
 
-		// services.delete(model.getId());
-		// Assert.assertNull(services.getById(model.getId()));
+		services.delete(model.getId());
+		Assert.assertNull(services.getById(model.getId()));
 	}
 }
