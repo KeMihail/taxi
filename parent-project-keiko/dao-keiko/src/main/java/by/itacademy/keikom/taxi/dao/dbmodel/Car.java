@@ -2,7 +2,7 @@ package by.itacademy.keikom.taxi.dao.dbmodel;
 
 import java.sql.Timestamp;
 
-import by.itacademy.keikom.taxi.dao.enums.ECarStatus;
+import by.itacademy.keikom.taxi.dao.enums.CarStatus;
 
 public class Car {
 
@@ -11,7 +11,7 @@ public class Car {
 	private Integer releaseYear;
 	private Integer modelId;
 	private Integer legalEntityId;
-	private ECarStatus status;
+	private CarStatus status;
 	private Timestamp created;
 	private Timestamp modified;
 
@@ -58,11 +58,11 @@ public class Car {
 		this.legalEntityId = legalEntityId;
 	}
 
-	public ECarStatus getStatus() {
+	public CarStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(ECarStatus status) {
+	public void setStatus(CarStatus status) {
 		this.status = status;
 	}
 

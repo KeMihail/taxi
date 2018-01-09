@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import by.itacademy.keikom.taxi.dao.IModelDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
-import by.itacademy.keikom.taxi.dao.enums.EBodyType;
-import by.itacademy.keikom.taxi.dao.enums.ECarKit;
-import by.itacademy.keikom.taxi.dao.enums.EEngineType;
+import by.itacademy.keikom.taxi.dao.enums.BodyType;
+import by.itacademy.keikom.taxi.dao.enums.CarKit;
+import by.itacademy.keikom.taxi.dao.enums.EngineType;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
@@ -140,9 +140,9 @@ public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 		Model model = new Model();
 		model.setId(rs.getInt(1));
 		model.setName(rs.getString(2));
-		model.setCarCit(ECarKit.valueOf(rs.getString(3)));
-		model.setEngineType(EEngineType.valueOf(rs.getString(4)));
-		model.setBodyType(EBodyType.valueOf(rs.getString(5)));
+		model.setCarCit(CarKit.valueOf(rs.getString(3)));
+		model.setEngineType(EngineType.valueOf(rs.getString(4)));
+		model.setBodyType(BodyType.valueOf(rs.getString(5)));
 		model.setBrandId(rs.getInt(6));
 		model.setCreated(rs.getTimestamp(7));
 		model.setModified(rs.getTimestamp(8));

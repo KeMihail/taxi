@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import by.itacademy.keikom.taxi.dao.ICarDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
-import by.itacademy.keikom.taxi.dao.enums.ECarStatus;
+import by.itacademy.keikom.taxi.dao.enums.CarStatus;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
 public class CarDaoImpl extends AbstractDaoImpl implements ICarDao {
@@ -138,7 +138,7 @@ public class CarDaoImpl extends AbstractDaoImpl implements ICarDao {
 		car.setReleaseYear(rs.getInt(3));
 		car.setModelId(rs.getInt(4));
 		car.setLegalEntityId(rs.getInt(5));
-		car.setStatus(ECarStatus.valueOf(rs.getString((6))));
+		car.setStatus(CarStatus.valueOf(rs.getString((6))));
 		car.setCreated(rs.getTimestamp(7));
 		car.setModified(rs.getTimestamp(8));
 		return car;

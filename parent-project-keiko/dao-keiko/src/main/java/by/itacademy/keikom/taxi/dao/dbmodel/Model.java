@@ -1,8 +1,8 @@
 package by.itacademy.keikom.taxi.dao.dbmodel;
 
-import by.itacademy.keikom.taxi.dao.enums.EBodyType;
-import by.itacademy.keikom.taxi.dao.enums.ECarKit;
-import by.itacademy.keikom.taxi.dao.enums.EEngineType;
+import by.itacademy.keikom.taxi.dao.enums.BodyType;
+import by.itacademy.keikom.taxi.dao.enums.CarKit;
+import by.itacademy.keikom.taxi.dao.enums.EngineType;
 
 import java.sql.Timestamp;
 
@@ -10,9 +10,9 @@ public class Model {
 
 	private Integer id;
 	private String name;
-	private ECarKit carCit;
-	private EEngineType engineType;
-	private EBodyType BodyType;
+	private CarKit carCit;
+	private EngineType engineType;
+	private BodyType BodyType;
 	private Integer brandId;
 	private Timestamp created;
 	private Timestamp modified;
@@ -36,27 +36,27 @@ public class Model {
 		this.name = name;
 	}
 
-	public ECarKit getCarCit() {
+	public CarKit getCarCit() {
 		return carCit;
 	}
 
-	public void setCarCit(ECarKit carCit) {
+	public void setCarCit(CarKit carCit) {
 		this.carCit = carCit;
 	}
 
-	public EEngineType getEngineType() {
+	public EngineType getEngineType() {
 		return engineType;
 	}
 
-	public void setEngineType(EEngineType engineType) {
+	public void setEngineType(EngineType engineType) {
 		this.engineType = engineType;
 	}
 
-	public EBodyType getBodyType() {
+	public BodyType getBodyType() {
 		return BodyType;
 	}
 
-	public void setBodyType(EBodyType eBodyType) {
+	public void setBodyType(BodyType eBodyType) {
 		BodyType = eBodyType;
 	}
 

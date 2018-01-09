@@ -10,15 +10,16 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car2CarOption;
 import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
+import by.itacademy.keikom.taxi.dao.dbmodel.Costs;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.dao.dbmodel.Order;
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.dao.enums.EBodyType;
-import by.itacademy.keikom.taxi.dao.enums.ECarKit;
-import by.itacademy.keikom.taxi.dao.enums.ECarStatus;
-import by.itacademy.keikom.taxi.dao.enums.EEngineType;
+import by.itacademy.keikom.taxi.dao.enums.BodyType;
+import by.itacademy.keikom.taxi.dao.enums.CarKit;
+import by.itacademy.keikom.taxi.dao.enums.CarStatus;
+import by.itacademy.keikom.taxi.dao.enums.EngineType;
 import by.itacademy.keikom.taxi.dao.enums.UserRole;
 
 public abstract class AbstractServicesTest {
@@ -35,10 +36,10 @@ public abstract class AbstractServicesTest {
 
 		Model model = new Model();
 		model.setName("Лагуна");
-		model.setBodyType(EBodyType.Minivan);
+		model.setBodyType(BodyType.Minivan);
 		model.setBrandId(brand.getId());
-		model.setCarCit(ECarKit.Classic);
-		model.setEngineType(EEngineType.Diesel);
+		model.setCarCit(CarKit.Classic);
+		model.setEngineType(EngineType.Diesel);
 		return model;
 	}
 
@@ -87,7 +88,7 @@ public abstract class AbstractServicesTest {
 		car.setUserId(user.getId());
 		car.setModelId(model.getId());
 		car.setLegalEntityId(legalEntity.getId());
-		car.setStatus(ECarStatus.Online);
+		car.setStatus(CarStatus.Online);
 		return car;
 	}
 
@@ -153,5 +154,21 @@ public abstract class AbstractServicesTest {
 		order.setRateId(rate.getId());
 		order.setDeleted(false);
 		return order;
+	}
+
+	public static Costs createCosts(Car car) {
+
+		Costs costs = new Costs();
+		costs.setCarId(car.getId());
+		costs.setTaxes(150.0);
+		costs.setTechnicalInspection(70.0);
+		costs.setInsurance(40.0);
+		costs.setCarService(90.5);
+		costs.setPretripInspection(80.4);
+		costs.setSalaryDriver(500.0);
+		costs.setFuelConsumption(4.5);
+		costs.setOther(40.2);
+
+		return costs;
 	}
 }
