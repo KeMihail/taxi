@@ -15,9 +15,10 @@ import by.itacademy.keikom.taxi.dao.ICarOptionDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
-public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, parseCarOption {
+public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CarOptionDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(CarOptionDaoImpl.class);
 	private static CarOptionDaoImpl instance = null;
 
 	private CarOptionDaoImpl() {
@@ -34,9 +35,10 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, 
 	public Integer create(CarOption carOption) {
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement(
-						"insert into car_option(name,created,modified) VALUES(?,?,?)",
-						Statement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement pst = connect
+						.prepareStatement(
+								"insert into car_option(name,created,modified) VALUES(?,?,?)",
+								Statement.RETURN_GENERATED_KEYS)) {
 			LOGGER.info("execute SQL: create new option to Car");
 
 			pst.setString(1, carOption.getName());
@@ -58,7 +60,8 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, 
 	public void delete(Integer id) {
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("delete from car_option where id = ?")) {
+				PreparedStatement pst = connect
+						.prepareStatement("delete from car_option where id = ?")) {
 			LOGGER.info("execute SQL: delete one option to Car");
 
 			pst.setInt(1, id);
@@ -89,7 +92,8 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, 
 	public CarOption getById(Integer id) {
 
 		try (Connection connect = getConnection();
-				PreparedStatement pst = connect.prepareStatement("select * from car_option where id = ?")) {
+				PreparedStatement pst = connect
+						.prepareStatement("select * from car_option where id = ?")) {
 			LOGGER.info("execute SQL: show one option Car");
 
 			pst.setInt(1, id);
@@ -109,7 +113,8 @@ public class CarOptionDaoImpl extends AbstractDaoImpl implements ICarOptionDao, 
 		// select * from car_option;
 
 		List<CarOption> list = new ArrayList<CarOption>();
-		try (Connection connect = getConnection(); Statement st = connect.createStatement()) {
+		try (Connection connect = getConnection();
+				Statement st = connect.createStatement()) {
 			LOGGER.info("execute SQL: show all option car");
 			ResultSet rs = st.executeQuery("select * from carOption_getAll();");
 			while (rs.next()) {

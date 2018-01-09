@@ -1,14 +1,11 @@
 package by.itacademy.keikom.taxi.dao.impl;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class AbstractDaoImpl {
 
