@@ -1,7 +1,6 @@
 package by.itacademy.keikom.taxi.services.impl;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,15 +26,12 @@ public class OrderServicesImpl implements IOrder {
 	@Override
 	public Order save(Order order) {
 
-		Calendar instance = Calendar.getInstance();
-
-		instance.add(Calendar.MINUTE, 5);
-		order.setOrderBegin(new Timestamp(instance.getTimeInMillis()));
+		order.setModified(new Timestamp(new Date().getTime()));
 
 		if (order.getId() != null) {
-			order.setModified(new Timestamp(new Date().getTime()));
 			dao.update(order);
 		} else {
+			order.setCreated(new Timestamp(new Date().getTime()));
 			Integer id = dao.create(order);
 			order.setId(id);
 		}

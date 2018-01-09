@@ -135,19 +135,23 @@ public abstract class AbstractServicesTest {
 	public static Order createOrder(Car car, Rate rate, User userClient) {
 
 		Order order = new Order();
-
 		Calendar instance = Calendar.getInstance();
+		instance.add(Calendar.MINUTE, 5);
 
-		order.setArrivalAddress("г.Гродно");
-		order.setDepartureAddress("г.Минск");
 		order.setCarId(car.getId());
-		order.setDeleted(false);
-		order.setDistance(265.0);
-		order.setInactivityMinutes(15);
-		instance.add(Calendar.MINUTE, 320);
-		order.setOrderEnd(new Timestamp(instance.getTimeInMillis()));
-		order.setRateId(rate.getId());
 		order.setUserId(userClient.getId());
+		order.setDepartureAddress("Соломовой 40/38");
+		order.setArrivalAddress("Клецкова 70/125");
+		order.setOrderBegin(new Timestamp(instance.getTimeInMillis()));
+
+		instance.add(Calendar.MINUTE, 10);
+
+		order.setOrderEnd(new Timestamp(instance.getTimeInMillis()));
+		order.setDistanceOrder(12.3);
+		order.setDistancePaid(7.4);
+		order.setInactivityMinutes(5);
+		order.setRateId(rate.getId());
+		order.setDeleted(false);
 		return order;
 	}
 }
