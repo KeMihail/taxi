@@ -4,24 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.ICarDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
-import by.itacademy.keikom.taxi.dao.impl.CarDaoImpl;
 import by.itacademy.keikom.taxi.services.ICarServices;
 
+@Service
 public class CarServicesImpl implements ICarServices {
 
-	private static CarDaoImpl dao = CarDaoImpl.getInstance();
-	private static CarServicesImpl instance = null;
-
-	private CarServicesImpl() {
-	}
-
-	public static synchronized CarServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new CarServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private ICarDao dao;
 
 	@Override
 	public Car save(Car car) {

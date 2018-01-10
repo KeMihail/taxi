@@ -4,24 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IBrandDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
-import by.itacademy.keikom.taxi.dao.impl.BrandDaoImpl;
 import by.itacademy.keikom.taxi.services.IBrandServices;
 
+@Service
 public class BrandServicesImpl implements IBrandServices {
 
-	private static BrandDaoImpl dao = BrandDaoImpl.getInstance();
-	private static BrandServicesImpl instance = null;
-
-	private BrandServicesImpl() {
-	}
-
-	public static synchronized BrandServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new BrandServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private static IBrandDao dao;
 
 	@Override
 	public Brand save(Brand brand) {

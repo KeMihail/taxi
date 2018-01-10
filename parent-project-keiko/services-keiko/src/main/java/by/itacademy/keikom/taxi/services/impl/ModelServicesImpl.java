@@ -4,25 +4,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IModelDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
-import by.itacademy.keikom.taxi.dao.impl.ModelDaoImpl;
 import by.itacademy.keikom.taxi.services.IModelServices;
 
+@Service
 public class ModelServicesImpl implements IModelServices {
 
-	private ModelServicesImpl() {
-	}
-
-	private static ModelServicesImpl instance = null;
-
-	public static synchronized ModelServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new ModelServicesImpl();
-		}
-		return instance;
-	}
-
-	ModelDaoImpl dao = ModelDaoImpl.getInstance();
+	@Autowired
+	private IModelDao dao;
 
 	@Override
 	public Model save(Model model) {

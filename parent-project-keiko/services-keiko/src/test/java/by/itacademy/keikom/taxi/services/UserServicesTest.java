@@ -5,16 +5,22 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class UserServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServicesTest.class);
-	private static UserServicesImpl services = UserServicesImpl.getInstance();
+	@Autowired
+	private IUserServices services;
 
 	private List<User> list;
 
@@ -68,6 +74,5 @@ public class UserServicesTest extends AbstractServicesTest {
 
 		services.delete(user.getId());
 		Assert.assertNull(services.getById(user.getId()));
-
 	}
 }

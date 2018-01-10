@@ -3,12 +3,17 @@ package by.itacademy.keikom.taxi.services;
 import java.text.ParseException;
 import java.util.List;
 
-import org.junit.AfterClass;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
@@ -16,41 +21,40 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Costs;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.CarServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.CostsServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.LegalEntityServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.ModelServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class CostServicesTest extends AbstractServicesTest {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(CostServicesTest.class);
-	private static CostsServicesImpl services = CostsServicesImpl.getInstance();
+	private static final Logger LOGGER = LoggerFactory.getLogger(CostServicesTest.class);
+
+	@Autowired
+	private CostsServicesImpl services;
 	private List<Costs> list;
 
 	private static Brand brand;
-	private static BrandServicesImpl brandServices = BrandServicesImpl
-			.getInstance();
+	@Autowired
+	private IBrandServices brandServices;
 
 	private static Model model = new Model();
-	private static ModelServicesImpl modelServices = ModelServicesImpl
-			.getInstance();
+	@Autowired
+	private IModelServices modelServices;
 
 	private static LegalEntity legalEntity;
-	private static LegalEntityServicesImpl legalEntityServices = LegalEntityServicesImpl
-			.getInstance();
+	@Autowired
+	private ILegalEntityServices legalEntityServices;
 
 	private static Car car;
-	private static CarServicesImpl carServices = CarServicesImpl.getInstance();
+	@Autowired
+	private ICarServices carServices;
 
 	private static User userDriver;
-	private static UserServicesImpl userServisec = UserServicesImpl
-			.getInstance();
+	@Autowired
+	private static IUserServices userServisec;
 
-	@BeforeClass
-	public static void prepareTestData() throws ParseException {
+	@PostConstruct
+	public void prepareTestData() throws ParseException {
 
 		brand = createBrand();
 		brandServices.save(brand);
@@ -68,8 +72,8 @@ public class CostServicesTest extends AbstractServicesTest {
 		carServices.save(car);
 	}
 
-	@AfterClass
-	public static void cleanTestData() {
+	@PreDestroy
+	public void cleanTestData() {
 
 		brandServices.delete(brand.getId());
 		modelServices.delete(model.getId());
@@ -95,16 +99,13 @@ public class CostServicesTest extends AbstractServicesTest {
 		Costs costs1 = services.getById(costs.getCarId());
 		Assert.assertEquals(costs1.getCarId(), costs.getCarId());
 		Assert.assertEquals(costs1.getCarService(), costs.getCarService());
-		Assert.assertEquals(costs1.getFuelConsumption(),
-				costs.getFuelConsumption());
+		Assert.assertEquals(costs1.getFuelConsumption(), costs.getFuelConsumption());
 		Assert.assertEquals(costs1.getInsurance(), costs.getInsurance());
 		Assert.assertEquals(costs1.getOther(), costs.getOther());
-		Assert.assertEquals(costs1.getPretripInspection(),
-				costs.getPretripInspection());
+		Assert.assertEquals(costs1.getPretripInspection(), costs.getPretripInspection());
 		Assert.assertEquals(costs1.getSalaryDriver(), costs.getSalaryDriver());
 		Assert.assertEquals(costs1.getTaxes(), costs.getTaxes());
-		Assert.assertEquals(costs1.getTechnicalInspection(),
-				costs.getTechnicalInspection());
+		Assert.assertEquals(costs1.getTechnicalInspection(), costs.getTechnicalInspection());
 		Assert.assertEquals(costs1.getCreated(), costs.getCreated());
 		Assert.assertEquals(costs1.getModified(), costs.getModified());
 
@@ -115,16 +116,13 @@ public class CostServicesTest extends AbstractServicesTest {
 		Costs costs2 = services.getById(costs.getCarId());
 		Assert.assertEquals(costs2.getCarId(), costs.getCarId());
 		Assert.assertEquals(costs2.getCarService(), costs.getCarService());
-		Assert.assertEquals(costs2.getFuelConsumption(),
-				costs.getFuelConsumption());
+		Assert.assertEquals(costs2.getFuelConsumption(), costs.getFuelConsumption());
 		Assert.assertEquals(costs2.getInsurance(), costs.getInsurance());
 		Assert.assertEquals(costs2.getOther(), costs.getOther());
-		Assert.assertEquals(costs2.getPretripInspection(),
-				costs.getPretripInspection());
+		Assert.assertEquals(costs2.getPretripInspection(), costs.getPretripInspection());
 		Assert.assertEquals(costs2.getSalaryDriver(), costs.getSalaryDriver());
 		Assert.assertEquals(costs2.getTaxes(), costs.getTaxes());
-		Assert.assertEquals(costs2.getTechnicalInspection(),
-				costs.getTechnicalInspection());
+		Assert.assertEquals(costs2.getTechnicalInspection(), costs.getTechnicalInspection());
 		Assert.assertEquals(costs2.getCreated(), costs.getCreated());
 		Assert.assertEquals(costs2.getModified(), costs.getModified());
 

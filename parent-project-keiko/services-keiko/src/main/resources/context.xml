@@ -10,7 +10,8 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="by.itacademy.keikom.taxi.services.sample" />
+	<context:component-scan base-package="by.itacademy.keikom.taxi.dao.impl" />
+	<context:component-scan base-package="by.itacademy.keikom.taxi.services.impl" />
 
 	<!-- <context:property-placeholder ignore-unresolvable="true" location="classpath:xml.properties" 
 		/> -->

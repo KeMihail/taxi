@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Order;
 
-public interface IOrder {
+public interface IOrderServices {
 
 	Order save(Order order);
 

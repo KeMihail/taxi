@@ -4,26 +4,20 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IUserDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.dao.impl.UserDaoImpl;
 import by.itacademy.keikom.taxi.services.IUserServices;
 import by.itacademy.keikom.taxi.services.exeption.NotValidBirthdayException;
 import by.itacademy.keikom.taxi.services.exeption.NotValidPhoneNumberException;
 
+@Service
 public class UserServicesImpl extends AbstractServicesImpl implements IUserServices {
 
-	private static UserDaoImpl dao = UserDaoImpl.getInstance();
-	private static UserServicesImpl instance = null;
-
-	private UserServicesImpl() {
-	}
-
-	public static synchronized UserServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new UserServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private IUserDao dao;
 
 	@Override
 	public User save(User user) {

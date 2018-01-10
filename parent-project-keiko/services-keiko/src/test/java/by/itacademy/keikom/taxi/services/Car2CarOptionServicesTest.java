@@ -3,12 +3,17 @@ package by.itacademy.keikom.taxi.services;
 import java.text.ParseException;
 import java.util.List;
 
-import org.junit.AfterClass;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car;
@@ -17,52 +22,47 @@ import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.Car2CarOptionServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.CarOptionServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.CarServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.LegalEntityServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.ModelServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class Car2CarOptionServicesTest extends AbstractServicesTest {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(Car2CarOptionServicesTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Car2CarOptionServicesTest.class);
 
-	private static final Car2CarOptionServicesImpl services = Car2CarOptionServicesImpl
-			.getInstance();
+	@Autowired
+	private ICar2CarOptionServices services;
 	private List<Car2CarOption> list;
 
-	private static CarServicesImpl carServices = CarServicesImpl.getInstance();
+	@Autowired
+	private ICarServices carServices;
 	private static Car car;
 
-	private static CarOptionServicesImpl carOptionServices = CarOptionServicesImpl
-			.getInstance();
+	@Autowired
+	private ICarOptionServices carOptionServices;
 	private static CarOption carOption;
 	private static CarOption carOptionUpdate;
 
-	private static ModelServicesImpl modelServices = ModelServicesImpl
-			.getInstance();
+	@Autowired
+	private IModelServices modelServices;
 	private static Model model;
 
-	private static LegalEntityServicesImpl legalEntityServices = LegalEntityServicesImpl
-			.getInstance();
+	@Autowired
+	private ILegalEntityServices legalEntityServices;
 	private static LegalEntity legalEntity;
 
-	private static UserServicesImpl userServisec = UserServicesImpl
-			.getInstance();
+	@Autowired
+	private IUserServices userServisec;
 	private static User user;
 
-	private static BrandServicesImpl brandServices = BrandServicesImpl
-			.getInstance();
+	@Autowired
+	private IBrandServices brandServices;
 	private static Brand brand;
 
 	private static List<Integer> getByIdOption;
 	private static List<Integer> getByIdCar;
 
-	@BeforeClass
-	public static void prepareTestData() throws ParseException {
+	@PostConstruct
+	public void prepareTestData() throws ParseException {
 
 		brand = createBrand();
 		brandServices.save(brand);
@@ -86,8 +86,8 @@ public class Car2CarOptionServicesTest extends AbstractServicesTest {
 		carOptionServices.save(carOptionUpdate);
 	}
 
-	@AfterClass
-	public static void cleanTestData() {
+	@PreDestroy
+	public void cleanTestData() {
 
 		brandServices.delete(brand.getId());
 		modelServices.delete(model.getId());

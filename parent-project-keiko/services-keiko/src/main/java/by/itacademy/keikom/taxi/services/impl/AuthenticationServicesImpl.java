@@ -4,24 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IAuthenticationDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
-import by.itacademy.keikom.taxi.dao.impl.AuthenticationDaoImpl;
 import by.itacademy.keikom.taxi.services.IAuthenticationServices;
 
+@Service
 public class AuthenticationServicesImpl implements IAuthenticationServices {
 
-	private static AuthenticationDaoImpl dao = AuthenticationDaoImpl.getInstance();
-	private static AuthenticationServicesImpl instance;
-
-	private AuthenticationServicesImpl() {
-	}
-
-	public static synchronized AuthenticationServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new AuthenticationServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private IAuthenticationDao dao;
 
 	@Override
 	public Authentication save(Authentication authentication) {

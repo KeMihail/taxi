@@ -4,16 +4,24 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
-import by.itacademy.keikom.taxi.services.impl.RateServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class RateServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RateServicesTest.class);
-	private static final RateServicesImpl services = RateServicesImpl.getInstance();
+
+	@Autowired
+	private IRateServices services;
+
 	private List<Rate> list = null;
 
 	@Test

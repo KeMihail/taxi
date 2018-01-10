@@ -10,25 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.IRateDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class RateDaoImpl extends AbstractDaoImpl implements IRateDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RateDaoImpl.class);
-	private static RateDaoImpl instance = null;
-
-	private RateDaoImpl() {
-	}
-
-	public static RateDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new RateDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(Rate rate) {

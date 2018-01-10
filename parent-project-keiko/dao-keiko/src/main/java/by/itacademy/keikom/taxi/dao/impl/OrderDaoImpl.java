@@ -10,25 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.IOrderDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Order;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class OrderDaoImpl extends AbstractDaoImpl implements IOrderDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderDaoImpl.class);
-	private static OrderDaoImpl instance = null;
-
-	private OrderDaoImpl() {
-	}
-
-	public static synchronized OrderDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new OrderDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(Order order) {

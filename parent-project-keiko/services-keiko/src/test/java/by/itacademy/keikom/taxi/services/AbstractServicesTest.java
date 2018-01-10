@@ -24,7 +24,7 @@ import by.itacademy.keikom.taxi.dao.enums.UserRole;
 
 public abstract class AbstractServicesTest {
 
-	public static Brand createBrand() {
+	public Brand createBrand() {
 
 		Brand brand = new Brand();
 		brand.setName("Рено");
@@ -32,7 +32,7 @@ public abstract class AbstractServicesTest {
 		return brand;
 	}
 
-	public static Model createModel(Brand brand) {
+	public Model createModel(Brand brand) {
 
 		Model model = new Model();
 		model.setName("Лагуна");
@@ -43,7 +43,7 @@ public abstract class AbstractServicesTest {
 		return model;
 	}
 
-	public static LegalEntity createLegalEntity() {
+	public LegalEntity createLegalEntity() {
 
 		LegalEntity legalEntity = new LegalEntity();
 		legalEntity.setName("ООО Такси");
@@ -53,7 +53,7 @@ public abstract class AbstractServicesTest {
 		return legalEntity;
 	}
 
-	public static User createUser() throws ParseException {
+	public User createUser() throws ParseException {
 
 		User user = new User();
 		user.setName("Миша");
@@ -67,7 +67,7 @@ public abstract class AbstractServicesTest {
 		return user;
 	}
 
-	public static User createUserClient() throws ParseException {
+	public User createUserClient() throws ParseException {
 
 		User user = new User();
 		user.setName("Оля");
@@ -81,7 +81,7 @@ public abstract class AbstractServicesTest {
 		return user;
 	}
 
-	public static Car createCar(User user, Model model, LegalEntity legalEntity) {
+	public Car createCar(User user, Model model, LegalEntity legalEntity) {
 
 		Car car = new Car();
 		car.setReleaseYear(2001);
@@ -92,7 +92,7 @@ public abstract class AbstractServicesTest {
 		return car;
 	}
 
-	public static Rate createRate() {
+	public Rate createRate() {
 
 		Rate rate = new Rate();
 		rate.setName("Дневной");
@@ -102,7 +102,7 @@ public abstract class AbstractServicesTest {
 		return rate;
 	}
 
-	public static Authentication createAuthentication(User user) {
+	public Authentication createAuthentication(User user) {
 
 		Authentication authentication = new Authentication();
 		authentication.setUserId(user.getId());
@@ -111,21 +111,21 @@ public abstract class AbstractServicesTest {
 		return authentication;
 	}
 
-	public static CarOption createCarOption() {
+	public CarOption createCarOption() {
 
 		CarOption carOption = new CarOption();
 		carOption.setName("Кондиционер");
 		return carOption;
 	}
 
-	public static CarOption createCarOptionUpdate() {
+	public CarOption createCarOptionUpdate() {
 
 		CarOption carOption = new CarOption();
 		carOption.setName("Автомобиль Бизнес класса");
 		return carOption;
 	}
 
-	public static Car2CarOption createCar2CarOption(Car car, CarOption carOption) {
+	public Car2CarOption createCar2CarOption(Car car, CarOption carOption) {
 
 		Car2CarOption obj = new Car2CarOption();
 		obj.setCarId(car.getId());
@@ -133,7 +133,7 @@ public abstract class AbstractServicesTest {
 		return obj;
 	}
 
-	public static Order createOrder(Car car, Rate rate, User userClient) {
+	public Order createOrder(Car car, Rate rate, User userClient) {
 
 		Order order = new Order();
 		Calendar instance = Calendar.getInstance();
@@ -156,7 +156,7 @@ public abstract class AbstractServicesTest {
 		return order;
 	}
 
-	public static Costs createCosts(Car car) {
+	public Costs createCosts(Car car) {
 
 		Costs costs = new Costs();
 		costs.setCarId(car.getId());

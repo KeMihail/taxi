@@ -4,24 +4,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.ILegalEntityDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
-import by.itacademy.keikom.taxi.dao.impl.LegalEntityDaoImpl;
 import by.itacademy.keikom.taxi.services.ILegalEntityServices;
 import by.itacademy.keikom.taxi.services.exeption.NotValidPhoneNumberException;
 
+@Service
 public class LegalEntityServicesImpl extends AbstractServicesImpl implements ILegalEntityServices {
-	private static LegalEntityServicesImpl instance = null;
-	private static LegalEntityDaoImpl dao = LegalEntityDaoImpl.getInstance();
 
-	private LegalEntityServicesImpl() {
-	}
-
-	public static synchronized LegalEntityServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new LegalEntityServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private ILegalEntityDao dao;
 
 	@Override
 	public LegalEntity save(LegalEntity legalEntity) {

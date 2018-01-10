@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.IModelDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
@@ -18,20 +19,10 @@ import by.itacademy.keikom.taxi.dao.enums.CarKit;
 import by.itacademy.keikom.taxi.dao.enums.EngineType;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class ModelDaoImpl extends AbstractDaoImpl implements IModelDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModelDaoImpl.class);
-	private static ModelDaoImpl instance = null;
-
-	private ModelDaoImpl() {
-	}
-
-	public static synchronized ModelDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new ModelDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(Model model) {

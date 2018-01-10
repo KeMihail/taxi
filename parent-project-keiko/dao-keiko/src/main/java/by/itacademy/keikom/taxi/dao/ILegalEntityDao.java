@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 
-public interface ILegalEntity {
+public interface ILegalEntityDao {
 
 	Integer create(LegalEntity obj);
 

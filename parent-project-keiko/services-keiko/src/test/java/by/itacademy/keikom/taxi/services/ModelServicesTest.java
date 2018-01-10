@@ -2,38 +2,49 @@ package by.itacademy.keikom.taxi.services;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.ModelServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class ModelServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModelServicesTest.class);
 
 	private static Brand brand;
-	private static BrandServicesImpl brandServices = BrandServicesImpl.getInstance();
+	@Autowired
+	private IBrandServices brandServices;
 
-	private static ModelServicesImpl services = ModelServicesImpl.getInstance();
+	@Autowired
+	private IModelServices services;
 	private static List<Model> list;
 
-	@BeforeClass
-	public static void prepareTestData() {
+	@PostConstruct
+	public void prepareTestData() {
 		LOGGER.info("prepare data for ModelServicesTest");
 
 		brand = createBrand();
 		brandServices.save(brand);
 	}
 
-	@AfterClass
-	public static void cleanTestData() {
+	@PreDestroy
+	public void cleanTestData() {
 		brandServices.delete(brand.getId());
 	}
 

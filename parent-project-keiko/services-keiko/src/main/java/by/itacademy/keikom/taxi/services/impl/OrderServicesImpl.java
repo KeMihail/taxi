@@ -4,24 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IOrderDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Order;
-import by.itacademy.keikom.taxi.dao.impl.OrderDaoImpl;
-import by.itacademy.keikom.taxi.services.IOrder;
+import by.itacademy.keikom.taxi.services.IOrderServices;
 
-public class OrderServicesImpl implements IOrder {
+@Service
+public class OrderServicesImpl implements IOrderServices {
 
-	private static OrderDaoImpl dao = OrderDaoImpl.getInstance();
-	private static OrderServicesImpl instance = null;
-
-	private OrderServicesImpl() {
-	}
-
-	public static synchronized OrderServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new OrderServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private IOrderDao dao;
 
 	@Override
 	public Order save(Order order) {

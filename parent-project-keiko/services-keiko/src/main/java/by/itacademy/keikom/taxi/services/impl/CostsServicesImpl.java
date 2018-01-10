@@ -4,24 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.ICostsDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Costs;
-import by.itacademy.keikom.taxi.dao.impl.CostsDaoImpl;
 import by.itacademy.keikom.taxi.services.ICostsServices;
 
+@Service
 public class CostsServicesImpl implements ICostsServices {
 
-	CostsDaoImpl dao = CostsDaoImpl.getInstance();
-	private static CostsServicesImpl instance = null;
-
-	private CostsServicesImpl() {
-	}
-
-	public static CostsServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new CostsServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private ICostsDao dao;
 
 	@Override
 	public Costs save(Costs costs) {

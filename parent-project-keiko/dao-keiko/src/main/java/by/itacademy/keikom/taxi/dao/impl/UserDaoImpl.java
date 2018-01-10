@@ -10,26 +10,17 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.IUserDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
 import by.itacademy.keikom.taxi.dao.enums.UserRole;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class UserDaoImpl extends AbstractDaoImpl implements IUserDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
-	private static UserDaoImpl instance = null;
-
-	private UserDaoImpl() {
-	}
-
-	public synchronized static UserDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new UserDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(User user) {

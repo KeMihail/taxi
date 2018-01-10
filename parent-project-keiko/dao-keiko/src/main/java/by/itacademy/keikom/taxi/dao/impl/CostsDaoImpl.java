@@ -10,25 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.ICostsDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Costs;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class CostsDaoImpl extends AbstractDaoImpl implements ICostsDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CostsDaoImpl.class);
-	private static CostsDaoImpl instance = null;
-
-	private CostsDaoImpl() {
-	}
-
-	public static CostsDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new CostsDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(Costs costs) {

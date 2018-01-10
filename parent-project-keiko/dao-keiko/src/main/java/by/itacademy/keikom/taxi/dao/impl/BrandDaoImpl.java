@@ -10,25 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.IBrandDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Brand;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class BrandDaoImpl extends AbstractDaoImpl implements IBrandDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BrandDaoImpl.class);
-	private static BrandDaoImpl instance = null;
-
-	private BrandDaoImpl() {
-	}
-
-	public static synchronized BrandDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new BrandDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(Brand brand) {

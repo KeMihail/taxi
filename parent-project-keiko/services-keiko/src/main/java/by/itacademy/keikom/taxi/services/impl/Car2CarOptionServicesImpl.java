@@ -2,24 +2,18 @@ package by.itacademy.keikom.taxi.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.ICar2CarOptionDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car2CarOption;
-import by.itacademy.keikom.taxi.dao.impl.Car2CarOptionDaoImpl;
 import by.itacademy.keikom.taxi.services.ICar2CarOptionServices;
 
+@Service
 public class Car2CarOptionServicesImpl implements ICar2CarOptionServices {
 
-	private static Car2CarOptionDaoImpl dao = Car2CarOptionDaoImpl.getInstance();
-	private static Car2CarOptionServicesImpl instance = null;
-
-	private Car2CarOptionServicesImpl() {
-	}
-
-	public static synchronized Car2CarOptionServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new Car2CarOptionServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private ICar2CarOptionDao dao;
 
 	@Override
 	public Car2CarOption create(Car2CarOption obj) {

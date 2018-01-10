@@ -4,17 +4,25 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.services.impl.CarOptionServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class CarOptionServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CarOptionServicesTest.class);
 
-	private static final CarOptionServicesImpl services = CarOptionServicesImpl.getInstance();
+	@Autowired
+	private ICarOptionServices services;
 	private List<CarOption> list;
 
 	@Test

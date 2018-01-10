@@ -3,36 +3,44 @@ package by.itacademy.keikom.taxi.services;
 import java.text.ParseException;
 import java.util.List;
 
-import org.junit.AfterClass;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import by.itacademy.keikom.taxi.dao.dbmodel.Authentication;
 import by.itacademy.keikom.taxi.dao.dbmodel.User;
-import by.itacademy.keikom.taxi.services.impl.AuthenticationServicesImpl;
-import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:context.xml")
 public class AuthenticationServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationServicesTest.class);
 
-	private static AuthenticationServicesImpl services = AuthenticationServicesImpl.getInstance();
+	@Autowired
+	private IAuthenticationServices services;
+
 	private List<Authentication> list;
 
-	private static UserServicesImpl userServices = UserServicesImpl.getInstance();
-	private static User user;
+	@Autowired
+	private IUserServices userServices;
+	private User user;
 
-	@BeforeClass
-	public static void prepareTestData() throws ParseException {
+	@PostConstruct
+	public void prepareTestData() throws ParseException {
 		user = createUser();
 		userServices.save(user);
 	}
 
-	@AfterClass
-	public static void cleanTestData() {
+	@PreDestroy
+	public void cleanTestData() {
 		userServices.delete(user.getId());
 	}
 

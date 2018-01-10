@@ -10,25 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
-import by.itacademy.keikom.taxi.dao.ILegalEntity;
+import by.itacademy.keikom.taxi.dao.ILegalEntityDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.LegalEntity;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
-public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntity {
+@Repository
+public class LegalEntityDaoImpl extends AbstractDaoImpl implements ILegalEntityDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LegalEntityDaoImpl.class);
-	private static LegalEntityDaoImpl instance = null;
-
-	private LegalEntityDaoImpl() {
-	}
-
-	public synchronized static LegalEntityDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new LegalEntityDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Integer create(LegalEntity legalEntity) {

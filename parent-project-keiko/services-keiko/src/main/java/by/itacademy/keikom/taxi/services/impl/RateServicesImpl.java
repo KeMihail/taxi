@@ -4,25 +4,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import by.itacademy.keikom.taxi.dao.IRateDao;
 import by.itacademy.keikom.taxi.dao.dbmodel.Rate;
-import by.itacademy.keikom.taxi.dao.impl.RateDaoImpl;
 import by.itacademy.keikom.taxi.services.IRateServices;
 
+@Service
 public class RateServicesImpl implements IRateServices {
 
-	private static RateServicesImpl instance = null;
-	private static final RateDaoImpl dao = RateDaoImpl.getInstance();
-
-	private RateServicesImpl() {
-
-	}
-
-	public static synchronized RateServicesImpl getInstance() {
-		if (instance == null) {
-			instance = new RateServicesImpl();
-		}
-		return instance;
-	}
+	@Autowired
+	private IRateDao dao;;
 
 	@Override
 	public Rate save(Rate rate) {

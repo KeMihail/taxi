@@ -10,27 +10,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import by.itacademy.keikom.taxi.dao.ICar2CarOptionDao;
-import by.itacademy.keikom.taxi.dao.dbmodel.Car;
 import by.itacademy.keikom.taxi.dao.dbmodel.Car2CarOption;
-import by.itacademy.keikom.taxi.dao.dbmodel.CarOption;
 import by.itacademy.keikom.taxi.dao.exeption.SQLExecutionException;
 
+@Repository
 public class Car2CarOptionDaoImpl extends AbstractDaoImpl implements ICar2CarOptionDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Car2CarOptionDaoImpl.class);
-	private static Car2CarOptionDaoImpl instance = null;
-
-	private Car2CarOptionDaoImpl() {
-	}
-
-	public static synchronized Car2CarOptionDaoImpl getInstance() {
-		if (instance == null) {
-			instance = new Car2CarOptionDaoImpl();
-		}
-		return instance;
-	}
 
 	@Override
 	public Car2CarOption create(Car2CarOption obj) {
