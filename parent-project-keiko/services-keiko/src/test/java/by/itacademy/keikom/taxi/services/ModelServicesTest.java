@@ -21,8 +21,6 @@ import by.itacademy.keikom.taxi.dao.dbmodel.Model;
 import by.itacademy.keikom.taxi.services.impl.BrandServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.ModelServicesImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:context.xml")
 public class ModelServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModelServicesTest.class);

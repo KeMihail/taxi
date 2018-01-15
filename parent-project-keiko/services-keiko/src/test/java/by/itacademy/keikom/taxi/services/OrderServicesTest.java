@@ -33,8 +33,6 @@ import by.itacademy.keikom.taxi.services.impl.OrderServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.RateServicesImpl;
 import by.itacademy.keikom.taxi.services.impl.UserServicesImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:context.xml")
 public class OrderServicesTest extends AbstractServicesTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderServicesTest.class);
